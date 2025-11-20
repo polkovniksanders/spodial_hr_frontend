@@ -14,7 +14,7 @@ export default async function Layout({ children }: PropsWithChildren) {
       <div className={'flex flex-col w-full'}>
         <User />
 
-        <div className={'h-full'}>{children}</div>
+        <div className={'h-screen'}>{children}</div>
       </div>
     </div>
   );

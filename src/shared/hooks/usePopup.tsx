@@ -24,11 +24,19 @@ export const usePopup = () => {
     };
   }, []);
 
-  const openPopup = (e: MouseEvent) => {
+  const openPopup = (e: MouseEvent, index: number, popupWidth: number) => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+
+    console.log(rect);
+
+    const windowWidth = window.innerWidth;
+
+    console.log('windowWidth', windowWidth);
+
     setPopupPos({
       top: rect.top + rect.height / 2,
-      left: rect.left + rect.width / 2,
+      left: rect.left + popupWidth - 228,
+      // left: rect.left + popupWidth,
     });
   };
 

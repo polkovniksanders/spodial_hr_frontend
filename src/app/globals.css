@@ -10,6 +10,8 @@
   --color-main-gradient: linear-gradient(126deg, #F5FFF3 24.45%, #CCECD8 90.22%);
   --color-hover: rgba(10, 66, 30, 0.04);
   --color-grey: rgba(45, 86, 60, 0.58);
+
+  --color-border-primary: rgba(79, 178, 104, 0.25);
 }
 
 @theme inline {
@@ -26,6 +28,9 @@
   --color-hover: rgba(10, 66, 30, 0.04);
   --color-grey: rgba(45, 86, 60, 0.58);
 
+  --color-border-primary: rgba(79, 178, 104, 0.25);
+
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,6 +41,12 @@
 }
 
 @layer utilities {
+
+  .border-table {
+    border-width: 1px;
+    border-color: rgba(79, 178, 104, 0.25);
+  }
+
   .bg-gradient-primary {
     background: linear-gradient(126deg, #F5FFF3 24.45%, #CCECD8 90.22%);
   }

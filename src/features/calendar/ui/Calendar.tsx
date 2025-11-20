@@ -1,16 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  startOfMonth,
-  endOfMonth,
-  startOfWeek,
-  endOfWeek,
-  addDays,
-  format,
-  isSameMonth,
-  isToday,
-} from 'date-fns';
 import CalendarPopup from '@/features/calendar/ui/CalendarPopup';
 import { usePopup } from '@/shared/hooks/usePopup';
 import { CalendarMonth } from '@/features/calendar/ui/CalendarMonth';
@@ -22,8 +12,8 @@ export default function Calendar() {
 
   const { popupPos, openPopup, popupRef, closePopup } = usePopup();
 
-  const onCellClick = (e: MouseEvent, date: Date) => {
-    openPopup(e);
+  const onCellClick = (e: MouseEvent, index: number) => {
+    openPopup(e, index, 292);
   };
 
   return (
@@ -32,7 +22,7 @@ export default function Calendar() {
         currentMonth={currentMonth}
         setCurrentMonth={setCurrentMonth}
       />
-      <CalendarDays />
+      {/* <CalendarDays />*/}
       <CalendarCells onCellClick={onCellClick} currentMonth={currentMonth} />
 
       {popupPos && (

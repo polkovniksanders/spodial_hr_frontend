@@ -1,10 +1,18 @@
+import { useElementSize } from '@/shared/hooks/useElementSize';
+
 export default function CalendarDays() {
+  const ref = useElementSize('calendarDays');
+
   const days = [];
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   for (let day of weekDays) {
     days.push(
-      <div key={day} className='text-center font-medium text-gray-500'>
+      <div
+        ref={ref}
+        key={day}
+        className='text-center font-medium text-gray-500'
+      >
         {day}
       </div>,
     );
