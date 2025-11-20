@@ -1,59 +1,31 @@
+'use client';
+
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Button } from '@/components/ui/button/Button';
 import Input from '@/components/ui/input/Input';
+import { SIGN_IN_FIELDS, SIGN_IN_VALUES } from '@/features/auth/utils/options';
+import type { SignInDTO } from '@/features/auth/service/auth.interface';
 
-type LoginFormValues = {
-  email: string;
-  password: string;
-};
-
-const fields = [
-  {
-    name: 'email',
-    label: 'Email',
-    type: 'email',
-    placeholder: 'Введите email',
-  },
-  {
-    name: 'password',
-    label: 'Пароль',
-    type: 'password',
-    placeholder: 'Введите пароль',
-  },
-];
-
-export default function LoginForm() {
-  const { control, handleSubmit } = useForm<LoginFormValues>({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+export default function SignInForm() {
+  const { control, handleSubmit } = useForm<SignInDTO>({
+    defaultValues: SIGN_IN_VALUES,
   });
 
-  const onSubmit = (data: LoginFormValues) => {
+  const onSubmit = (data: SignInDTO) => {
     console.log('Submitted:', data);
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='space-y-4 w-full max-w-md'
+      className='w-full flex flex-col gap-[30px]'
     >
-      {fields.map(field => (
+      {SIGN_IN_FIELDS.map(field => (
         <Controller
           key={field.name}
-          name={field.name as keyof LoginFormValues}
+          name={field.name as keyof SignInDTO}
           control={control}
-          rules={{
-            required: `${field.label} обязателен`,
-            ...(field.name === 'email' && {
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: 'Введите корректный email',
-              },
-            }),
-          }}
+          rules={field.rules}
           render={({ field: hookField, fieldState }) => (
             <Input
               {...hookField}
@@ -64,8 +36,6 @@ export default function LoginForm() {
           )}
         />
       ))}
-
-      <Button type='submit'>Войти</Button>
     </form>
   );
 }

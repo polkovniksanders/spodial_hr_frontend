@@ -10,23 +10,16 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript",  "plugin:prettier/recommended"),
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    rules: {
+      "react-hooks/exhaustive-deps": "off",
+      "react/no-unescaped-entities": "off",
+      "@next/next/no-page-custom-font": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
 ];
-
-eslintConfig.plugins = [
-  ...(eslintConfig.plugins || []),
-  "unused-imports"
-];
-
-eslintConfig.rules = {
-  ...(eslintConfig.rules || {}),
-  "react-hooks/exhaustive-deps": "off",
-  "unused-imports/no-unused-imports": "off",
-  'react/no-unescaped-entities': 'off',
-  '@next/next/no-page-custom-font': 'off',
-  "@typescript-eslint/ban-ts-comment": "off",
-  "@typescript-eslint/no-explicit-any": "off",
-
-};
 
 export default eslintConfig;

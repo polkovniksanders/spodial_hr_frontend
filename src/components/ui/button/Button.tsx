@@ -18,7 +18,7 @@ export function Button({
   ...rest
 }: Props) {
   const base =
-    'h-[56px] px-6 py-3 rounded-full font-inter text-base transition cursor-pointer';
+    'h-[56px] w-full px-6 py-3 rounded-full font-inter text-base transition cursor-pointer';
 
   const variants = {
     [BUTTON_VARIANT.primary]: 'bg-[#4FB268] text-white',

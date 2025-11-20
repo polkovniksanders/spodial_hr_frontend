@@ -86,7 +86,7 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
   return (
     <div
       className={cn(
-        'relative inline-flex items-center w-full',
+        'relative flex flex-col items-start w-full',
         containerClassName ?? '',
       )}
     >
@@ -150,11 +150,7 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
 
       {/* error message */}
       {typeof error === 'string' ? (
-        <p
-          className='mt-1 text-sm text-red-600'
-          role='alert'
-          aria-live='polite'
-        >
+        <p className='text-sm text-red-600' role='alert' aria-live='polite'>
           {error}
         </p>
       ) : null}

@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --color-primary: #4FB268;
+  --color-secondary: #D3DED6;
+  --color-tertiary: #ACB5AF;
+  --color-main-gradient: linear-gradient(126deg, #F5FFF3 24.45%, #CCECD8 90.22%);
+  --color-hover: rgba(10, 66, 30, 0.04);
+  --color-grey: rgba(45, 86, 60, 0.58);
 }
 
 @theme inline {
@@ -10,6 +17,15 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter-sans);
   --font-mono: var(--font-inter-mono);
+
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-tertiary: var(--color-tertiary);
+
+  --bg-main-gradient: var(--color-main-gradient);
+  --color-hover: rgba(10, 66, 30, 0.04);
+  --color-grey: rgba(45, 86, 60, 0.58);
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,10 +36,10 @@
 }
 
 @layer utilities {
-  .bg-green-gradient {
+  .bg-gradient-primary {
     background: linear-gradient(126deg, #F5FFF3 24.45%, #CCECD8 90.22%);
   }
-  .box-shadow-common {
+  .box-shadow-primary {
     box-shadow: 15px 13px 21.6px 0 rgba(10, 66, 30, 0.04);
   }
   .border-secondary {
@@ -32,14 +48,21 @@
   .border-primary {
     border: 1px solid #4FB268;
   }
-  .text-primary {
-    color: #4FB268
+  .border-tertiary {
+    border: 1px solid rgba(79, 178, 104, 0.25);
   }
+  .bg-primary {
+    background:  #4FB268;
+  }
+  .bg-secondary {
+    background: #F5FFF7;
+  }
+
   .text-secondary {
-    color: #D3DED6
+    color: #D3DED6;
   }
   .text-tertiary {
-    color: #ACB5AF
+    color: #ACB5AF;
   }
 }
 
