@@ -4,6 +4,7 @@ import { PublicEnvScript } from 'next-runtime-env';
 
 import './globals.css';
 import type { ReactNode } from 'react';
+import Providers from '@/app/Providers';
 
 const getFont = Inter({
   variable: '--font-inter-sans',
@@ -25,7 +26,9 @@ export default function RootLayout({
       <head>
         <PublicEnvScript />
       </head>
-      <body className={`${getFont.variable} antialiased`}>{children}</body>
+      <body className={`${getFont.variable} antialiased`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

@@ -1,25 +1,14 @@
 import Card from '@/components/ui/card/Card';
-import { H1 } from '@/components/ui/typography/H1';
-import { Button } from '@/components/ui/button/Button';
-import Link from 'next/link';
+import SignIn from '@/features/auth/widget/SignIn';
+import AuthTitle from '@/features/auth/ui/AuthTitle';
+import { AUTH_TITLE_VARIANT } from '@/features/auth/utils/options';
 
 export default function Page() {
   return (
     <Card>
       <div className={'w-[546px] my-[100px] mx-[72px]'}>
-        <div className={'flex justify-center mb-[70px]'}>
-          <H1>Sign In</H1>
-        </div>
-
-        <div className={'flex flex-col gap-3'}>
-          <Button>Log In</Button>
-
-          <Link href='register'>
-            <Button className={'w-full'} variant={'secondary'}>
-              Register
-            </Button>
-          </Link>
-        </div>
+        <AuthTitle type={AUTH_TITLE_VARIANT.SIGN_IN} />
+        <SignIn />
       </div>
     </Card>
   );
