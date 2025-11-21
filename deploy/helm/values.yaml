@@ -1,10 +1,9 @@
 image:
-  repository: tribes/ai_coach_backend
+  repository: tribes/spodial_hr_frontend
   pullPolicy: IfNotPresent
   registry: registry.fabit.ru
   tag: ""
   credentials:
-    registry: registry
     username: username
     password: password
 
