@@ -24,7 +24,10 @@ export const usePopup = () => {
     };
   }, []);
 
-  const openPopup = (e: MouseEvent, index: number, popupWidth: number) => {
+  const openPopup = (
+    e: React.MouseEvent<HTMLDivElement>,
+    popupWidth: number,
+  ) => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
 
     console.log(rect);

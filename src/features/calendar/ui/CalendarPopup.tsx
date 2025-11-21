@@ -1,7 +1,13 @@
 import Popup from '@/components/ui/popup/Popup';
 import { X } from 'lucide-react';
 
-export default function CalendarPopup({ top, left, onClose }) {
+interface Props {
+  top: number;
+  left: number;
+  onClose: () => void;
+}
+
+export default function CalendarPopup({ top, left, onClose }: Props) {
   const items = [
     {
       id: 1,
