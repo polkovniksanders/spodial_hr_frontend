@@ -36,7 +36,7 @@ export default function RegisterForm() {
               <div className='flex items-center gap-2'>
                 <input
                   type='checkbox'
-                  checked={hookField.value || false}
+                  //checked={hookField.value || false}
                   onChange={e => hookField.onChange(e.target.checked)}
                 />
                 <label>{field.label}</label>

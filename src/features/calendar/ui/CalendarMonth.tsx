@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type SetStateAction } from 'react';
 import { H2 } from '@/components/ui/typography/H2';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { addMonths, format, subMonths } from 'date-fns';
@@ -6,7 +6,12 @@ import { useElementSize } from '@/shared/hooks/useElementSize';
 
 type MonthShiftFn = (date: Date, amount: number) => Date;
 
-export const CalendarMonth = ({ setCurrentMonth, currentMonth }) => {
+interface Props {
+  currentMonth: Date;
+  setCurrentMonth: React.Dispatch<SetStateAction<Date>>;
+}
+
+export const CalendarMonth = ({ setCurrentMonth, currentMonth }: Props) => {
   const ref = useElementSize('calendarMonth');
 
   const switchMonth = (cb: MonthShiftFn) => {

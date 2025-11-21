@@ -4,7 +4,6 @@ import { useState } from 'react';
 import CalendarPopup from '@/features/calendar/ui/CalendarPopup';
 import { usePopup } from '@/shared/hooks/usePopup';
 import { CalendarMonth } from '@/features/calendar/ui/CalendarMonth';
-import CalendarDays from '@/features/calendar/ui/CalendarDays';
 import CalendarCells from '@/features/calendar/ui/CalendarCells';
 
 export default function Calendar() {
@@ -12,8 +11,8 @@ export default function Calendar() {
 
   const { popupPos, openPopup, popupRef, closePopup } = usePopup();
 
-  const onCellClick = (e: MouseEvent, index: number) => {
-    openPopup(e, index, 292);
+  const onCellClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    openPopup(e, 292);
   };
 
   return (

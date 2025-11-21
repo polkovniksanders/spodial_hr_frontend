@@ -10,9 +10,13 @@ import {
 } from 'date-fns';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store/store';
-import { useState } from 'react';
 
-export default function CalendarCells({ currentMonth, onCellClick }) {
+interface Props {
+  currentMonth: Date;
+  onCellClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+}
+
+export default function CalendarCells({ currentMonth, onCellClick }: Props) {
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart, { weekStartsOn: 1 });
@@ -51,7 +55,7 @@ export default function CalendarCells({ currentMonth, onCellClick }) {
 
       week.push(
         <div
-          onClick={e => onCellClick(e, i)}
+          onClick={e => onCellClick(e)}
           key={cloneDay.toString()}
           className={`
               relative flex-1
