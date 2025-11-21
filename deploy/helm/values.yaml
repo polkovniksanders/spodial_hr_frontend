@@ -1,0 +1,28 @@
+image:
+  repository: tribes/ai_coach_backend
+  pullPolicy: IfNotPresent
+  registry: registry.fabit.ru
+  tag: ""
+  credentials:
+    registry: registry
+    username: username
+    password: password
+
+envs:
+  nextPublicApiUrl: "" # https://api-coach-dev.fabitdev.ru/api
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
