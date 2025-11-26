@@ -44,7 +44,7 @@ export default function RegisterForm() {
       console.log('Registration success:', data);
 
       // Успех! Токен уже в куках, делаем редирект
-      router.replace(`/${ROUTES.DASHBOARD.CALENDAR}`);
+      router.replace(ROUTES.DASHBOARD.CALENDAR);
       router.refresh(); // Обновляем роутер, чтобы серверные компоненты увидели новую куку
     } catch (err) {
       console.error('Network or unexpected error during register:', err);
@@ -94,12 +94,12 @@ export default function RegisterForm() {
         ))}
       </form>
 
-      <div className={'flex flex-col gap-3'}>
+      <div className={'flex flex-col gap-3 mt-[30px]'}>
         <Button type='submit' form='register-form'>
           {BUTTON_TEXT.GET_STARTED}
         </Button>
 
-        <Link href='/sign-in' className='w-full'>
+        <Link href={ROUTES.AUTH.SIGN_IN} className='w-full'>
           <Button className={'w-full'} variant={'secondary'}>
             {BUTTON_TEXT.LOGIN}
           </Button>

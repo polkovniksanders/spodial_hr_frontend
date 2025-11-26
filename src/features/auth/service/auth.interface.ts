@@ -1,6 +1,6 @@
 import { AUTH_TITLE_VARIANT } from '@/features/auth/utils/options';
 
-export interface SignInDTO {
+export interface LoginDTO {
   email: string;
   password: string;
 }

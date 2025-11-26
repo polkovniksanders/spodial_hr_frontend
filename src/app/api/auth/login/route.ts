@@ -5,13 +5,11 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // 0. Проверяем наличие переменной
-    if (!process.env.API_URL) {
-      throw new Error('API_URL env variable is not defined');
-    }
+    //sl@sl.sl
+    //111111
 
     // 1. Отправляем запрос на внешний бэкенд
-    const backendRes = await fetch(process.env.API_URL + '/auth/register', {
+    const backendRes = await fetch(process.env.API_URL + '/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),

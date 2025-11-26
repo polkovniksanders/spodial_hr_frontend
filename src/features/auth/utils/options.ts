@@ -74,7 +74,7 @@ export const REGISTER_FIELDS = [
   },
   {
     name: 'acceptTerms',
-    label: 'Согласен с условиями',
+    label: 'I agree to Terms & Privacy Policy',
     type: 'checkbox',
     rules: {
       required: 'Необходимо согласие',
