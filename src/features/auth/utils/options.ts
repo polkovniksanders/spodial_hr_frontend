@@ -41,8 +41,8 @@ export const REGISTER_FIELDS = [
     rules: {
       required: 'Name обязателен',
       minLength: {
-        value: 6,
-        message: 'Минимальная длина пароля 6 символов',
+        value: 2,
+        message: 'Минимальная длина имени 2 символа',
       },
     },
   },
@@ -74,7 +74,7 @@ export const REGISTER_FIELDS = [
   },
   {
     name: 'acceptTerms',
-    label: 'Согласен с условиями',
+    label: 'I agree to Terms & Privacy Policy',
     type: 'checkbox',
     rules: {
       required: 'Необходимо согласие',
