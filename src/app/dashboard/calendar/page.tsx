@@ -29,8 +29,9 @@ const AuthorizedView = () => (
 );
 
 export default async function Page() {
-  const token = await getTokenFromRequest();
-  const isAuthorized = !!token;
-
-  return isAuthorized ? <AuthorizedView /> : <UnauthorizedView />;
+  return (
+    <>
+      <AuthorizedView /> : <UnauthorizedView />
+    </>
+  );
 }
