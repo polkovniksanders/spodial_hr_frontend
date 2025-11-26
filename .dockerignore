@@ -1,0 +1,8 @@
+.dockerignore
+.git
+.gitignore
+.gitlab-ci.yml
+deploy
+.env.development
+.env.production
+README.md
