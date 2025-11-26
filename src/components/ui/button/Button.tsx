@@ -4,6 +4,7 @@ import {
   BUTTON_VARIANT,
   type ButtonVariant,
 } from '@/components/ui/button/button.interface';
+import Hover from '@/components/ui/animation/Hover';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
@@ -27,8 +28,10 @@ export function Button({
   };
 
   return (
-    <button className={clsx(base, variants[variant], className)} {...rest}>
-      {children}
-    </button>
+    <Hover>
+      <button className={clsx(base, variants[variant], className)} {...rest}>
+        {children}
+      </button>
+    </Hover>
   );
 }

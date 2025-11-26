@@ -4,7 +4,11 @@ import { H1 } from '@/components/ui/typography/H1';
 
 export default function CalendarOnboardingTrigger() {
   return (
-    <div className={'flex flex-col gap-7.5 w-[654px]'}>
+    <div
+      className={
+        'flex flex-col gap-7.5 w-[654px] justify-center items-center h-full w-full'
+      }
+    >
       <H1>Continue with Google</H1>
       <OnboardingImage />
       <OnboardingButtons />

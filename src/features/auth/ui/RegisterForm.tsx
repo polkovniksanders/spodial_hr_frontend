@@ -99,7 +99,7 @@ export default function RegisterForm() {
           {BUTTON_TEXT.GET_STARTED}
         </Button>
 
-        <Link href={ROUTES.AUTH.SIGN_IN} className='w-full'>
+        <Link href={ROUTES.AUTH.LOGIN} className='w-full'>
           <Button className={'w-full'} variant={'secondary'}>
             {BUTTON_TEXT.LOGIN}
           </Button>

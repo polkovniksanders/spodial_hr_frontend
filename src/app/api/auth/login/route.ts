@@ -50,3 +50,23 @@ export async function POST(req: Request) {
     return new NextResponse('Internal Server Error', { status: 500 });
   }
 }
+
+/*
+export async function GET() {
+  // 1. Проверяем токен
+  const token = getTokenFromRequest();
+
+  // 2. Если токена нет, возвращаем 401 Unauthorized
+  if (!token) {
+    return new NextResponse('Unauthorized: Missing Token', { status: 401 });
+  }
+
+  // 3. Если токен есть и он валиден, возвращаем данные (пример)
+  try {
+    // В реальном приложении здесь будет проверка токена на бэкенде или в DB
+    // ...
+    return NextResponse.json({ message: 'Секретные данные', userId: '123' });
+  } catch (error) {
+    return new NextResponse('Token validation failed', { status: 403 });
+  }
+}*/
