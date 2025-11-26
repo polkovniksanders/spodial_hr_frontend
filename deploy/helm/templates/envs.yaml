@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: {{ include "spodial-hr-frontend.fullname" . }}-envs
 data:
-  NEXT_PUBLIC_API_URL: {{ .Values.envs.nextPublicApiUrl }}
+  API_URL: {{ .Values.envs.apiUrl }}

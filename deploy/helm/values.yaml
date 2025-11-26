@@ -8,7 +8,7 @@ image:
     password: password
 
 envs:
-  nextPublicApiUrl: "" # https://api-coach-dev.fabitdev.ru/api
+  apiUrl: ""
 
 imagePullSecrets: []
 nameOverride: ""
