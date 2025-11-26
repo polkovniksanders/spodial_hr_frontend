@@ -41,8 +41,8 @@ export const REGISTER_FIELDS = [
     rules: {
       required: 'Name обязателен',
       minLength: {
-        value: 6,
-        message: 'Минимальная длина пароля 6 символов',
+        value: 2,
+        message: 'Минимальная длина имени 2 символа',
       },
     },
   },
