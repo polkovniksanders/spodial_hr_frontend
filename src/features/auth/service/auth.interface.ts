@@ -1,6 +1,6 @@
 import { AUTH_TITLE_VARIANT } from '@/features/auth/utils/options';
 
-export interface SignInDTO {
+export interface LoginDTO {
   email: string;
   password: string;
 }
@@ -9,6 +9,13 @@ export interface RegisterDTO {
   name: string;
   email: string;
   password: string;
+}
+
+export interface RegisterResponse {
+  success: boolean;
+  user: {
+    token: string;
+  };
 }
 
 export type AuthTitleVariant =
