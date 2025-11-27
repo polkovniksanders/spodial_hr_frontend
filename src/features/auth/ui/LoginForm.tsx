@@ -2,23 +2,24 @@
 
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import Input from '@/components/ui/input/Input';
 import {
   BUTTON_TEXT,
   SIGN_IN_FIELDS,
   SIGN_IN_VALUES,
 } from '@/features/auth/utils/options';
 import type { LoginDTO } from '@/features/auth/service/auth.interface';
-import { Button } from '@/components/ui/button/Button';
-import Link from 'next/link';
 import { ROUTES } from '@/shared/utils/routes';
 import { useRouter } from 'next/navigation';
+import { VARIANT_MAPPER, type VariantType } from '@/shared/utils/fieldMapper';
+import FormFooter from '@/features/auth/ui/FormFooter';
 
 export default function LoginForm() {
   const router = useRouter();
 
-  const { control, handleSubmit } = useForm<LoginDTO>({
+  const { control, handleSubmit, setError } = useForm<LoginDTO>({
     defaultValues: SIGN_IN_VALUES,
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
   });
 
   const onSubmit = async (formData: LoginDTO) => {
@@ -32,19 +33,11 @@ export default function LoginForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        // Если сервер вернул ошибку, выводим её в консоль или в форму
-        console.error('Register error:', data.error);
-
-        // Пример: можно установить ошибку в поле 'email' или общую
-        // setError('root', { message: data.error });
-        return;
+        return setError('email', { message: data.error });
       }
 
-      console.log('Registration success:', data);
-
-      // Успех! Токен уже в куках, делаем редирект
       router.replace(ROUTES.DASHBOARD.CALENDAR);
-      router.refresh(); // Обновляем роутер, чтобы серверные компоненты увидели новую куку
+      router.refresh();
     } catch (err) {
       console.error('Network or unexpected error during register:', err);
     }
@@ -63,29 +56,28 @@ export default function LoginForm() {
             name={field.name as keyof LoginDTO}
             control={control}
             rules={field.rules}
-            render={({ field: hookField, fieldState }) => (
-              <Input
-                {...hookField}
-                label={field.label}
-                type={field.type}
-                error={fieldState.error?.message}
-              />
-            )}
+            render={({ field: hookField, fieldState }) => {
+              const variant: VariantType = field.variant;
+              const Component = VARIANT_MAPPER[variant];
+
+              return (
+                <Component
+                  field={hookField}
+                  fieldState={fieldState}
+                  config={field}
+                />
+              );
+            }}
           />
         ))}
       </form>
 
-      <div className={'flex flex-col gap-3 mt-[30px]'}>
-        <Button type={'submit'} form='login-form'>
-          {BUTTON_TEXT.LOGIN}
-        </Button>
-
-        <Link href={ROUTES.AUTH.REGISTER}>
-          <Button className={'w-full'} variant={'secondary'}>
-            {BUTTON_TEXT.REGISTER}
-          </Button>
-        </Link>
-      </div>
+      <FormFooter
+        primaryButton={BUTTON_TEXT.LOGIN}
+        primaryText={BUTTON_TEXT.REGISTER}
+        secondaryText={"Don't have an account?"}
+        secondaryRoute={ROUTES.AUTH.REGISTER}
+      />
     </>
   );
 }

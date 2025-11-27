@@ -1,7 +1,6 @@
 'use client';
 
 import { useForm, Controller } from 'react-hook-form';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { RegisterDTO } from '@/features/auth/service/auth.interface';
 import {
@@ -9,9 +8,10 @@ import {
   REGISTER_FIELDS,
   REGISTER_FIELDS_VALUES,
 } from '@/features/auth/utils/options';
-import Input from '@/components/ui/input/Input';
-import { Button } from '@/components/ui/button/Button';
-import { ROUTES } from '@/shared/utils/routes'; // Для редиректа в App Router.
+import { ROUTES } from '@/shared/utils/routes';
+import { VARIANT_MAPPER, type VariantType } from '@/shared/utils/fieldMapper';
+import React from 'react';
+import FormFooter from '@/features/auth/ui/FormFooter'; // Для редиректа в App Router.
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -33,21 +33,16 @@ export default function RegisterForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        // Если сервер вернул ошибку, выводим её в консоль или в форму
-        console.error('Register error:', data.error);
-
-        // Пример: можно установить ошибку в поле 'email' или общую
-        // setError('root', { message: data.error });
+        console.log('data.error ', data.error);
+        setError('email', { message: data.error });
         return;
       }
 
-      console.log('Registration success:', data);
-
-      // Успех! Токен уже в куках, делаем редирект
       router.replace(ROUTES.DASHBOARD.CALENDAR);
-      router.refresh(); // Обновляем роутер, чтобы серверные компоненты увидели новую куку
+      router.refresh();
     } catch (err) {
-      console.error('Network or unexpected error during register:', err);
+      console.log('err', err);
+      setError('email', { message: String(err) });
     }
   };
 
@@ -64,47 +59,28 @@ export default function RegisterForm() {
             name={field.name as keyof RegisterDTO}
             control={control}
             rules={field.rules}
-            render={({ field: hookField, fieldState }) =>
-              field.type === 'checkbox' ? (
-                <div className='flex items-center gap-2'>
-                  <input
-                    type='checkbox'
-                    checked={!!hookField.value}
-                    onChange={e => hookField.onChange(e.target.checked)}
-                    id={field.name}
-                  />
-                  <label htmlFor={field.name}>{field.label}</label>
-                  {fieldState.error && (
-                    <span className='text-red-500 text-sm'>
-                      {fieldState.error.message}
-                    </span>
-                  )}
-                </div>
-              ) : (
-                // Убедись, что компонент Input поддерживает пропсы
-                <Input
-                  {...hookField}
-                  label={field.label}
-                  type={field.type}
-                  error={fieldState.error?.message}
+            render={({ field: hookField, fieldState }) => {
+              const variant: VariantType = field.variant;
+              const Component = VARIANT_MAPPER[variant];
+
+              return (
+                <Component
+                  field={hookField}
+                  fieldState={fieldState}
+                  config={field}
                 />
-              )
-            }
+              );
+            }}
           />
         ))}
       </form>
 
-      <div className={'flex flex-col gap-3 mt-[30px]'}>
-        <Button type='submit' form='register-form'>
-          {BUTTON_TEXT.GET_STARTED}
-        </Button>
-
-        <Link href={ROUTES.AUTH.LOGIN} className='w-full'>
-          <Button className={'w-full'} variant={'secondary'}>
-            {BUTTON_TEXT.LOGIN}
-          </Button>
-        </Link>
-      </div>
+      <FormFooter
+        primaryButton={BUTTON_TEXT.GET_STARTED}
+        primaryText={`${BUTTON_TEXT.LOGIN} here`}
+        secondaryText={'Already have an account?'}
+        secondaryRoute={ROUTES.AUTH.LOGIN}
+      />
     </>
   );
 }

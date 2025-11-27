@@ -8,7 +8,7 @@ import { BUTTON_TEXT } from '@/features/auth/utils/options';
 export default async function CalendarOnboardingTrigger() {
   const attachCalendar = async () => {
     try {
-      const res = await fetch('/api/calendar/attach', {
+      const res = await fetch('/api/google/oauth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,8 +45,8 @@ export default async function CalendarOnboardingTrigger() {
       <H1>Continue with Google</H1>
       <OnboardingImage />
 
-      <div className={'px-[54px] w-full'}>
-        <Button onClick={attachCalendar}>{BUTTON_TEXT.GET_STARTED}</Button>
+      <div onClick={attachCalendar} className={'px-[54px] w-full'}>
+        <Button>{BUTTON_TEXT.GET_STARTED}</Button>
       </div>
     </div>
   );
