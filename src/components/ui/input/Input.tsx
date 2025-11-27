@@ -1,30 +1,22 @@
 'use client';
 
 import React, { forwardRef, useId, useState, useEffect } from 'react';
+import Error from '@/components/ui/input/Error';
 
 export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  /** string (message) or true to mark as error */
   error?: boolean | string;
   startAdornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
-  /** enable floating label behavior (label moves up when focused or has value) */
   floating?: boolean;
   containerClassName?: string;
+  value: string;
 }
 
 /** tiny classNames helper to avoid dependency */
 const cn = (...parts: Array<string | false | null | undefined>) =>
   parts.filter(Boolean).join(' ');
 
-/**
- * Input component with floating label and adornments.
- *
- * - ForwardRef compatible
- * - Works controlled or uncontrolled
- * - Accessible label linked to input id
- * - Floating label overlaps the input border when active (like Material UI)
- */
 const Input = forwardRef<HTMLInputElement, Props>(function Input(
   {
     id,
@@ -53,7 +45,6 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
     defaultValue === undefined ? undefined : String(defaultValue),
   );
 
-  // keep internal value in sync if value prop switches from undefined to defined and vice-versa
   useEffect(() => {
     if (value === undefined) return;
     setInternalValue(String(value ?? ''));
@@ -75,7 +66,6 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (value === undefined) {
-      // uncontrolled usage: keep local copy
       setInternalValue(e.target.value);
     }
     onChange?.(e);
@@ -94,7 +84,7 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
         className={cn(
           'px-8 flex items-center rounded-full h-[54px] w-full',
           'border bg-white transition-colors focus-within:border-primary focus-within:ring-2 focus-within:ring-offset-0 focus-within:ring-[#4FB268]',
-          error ? 'border-red-500' : 'border-secondary',
+          error ? 'border-red-700' : 'border-secondary',
           'relative',
         )}
       >
@@ -119,10 +109,9 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
         />
 
         {endAdornment ? (
-          <div className='flex items-center ml-2 pr-2'>{endAdornment}</div>
+          <div className='flex items-center ml-2'>{endAdornment}</div>
         ) : null}
 
-        {/* floating label */}
         {label ? (
           <label
             htmlFor={inputId}
@@ -148,12 +137,7 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
         ) : null}
       </div>
 
-      {/* error message */}
-      {typeof error === 'string' ? (
-        <p className='text-sm text-red-600' role='alert' aria-live='polite'>
-          {error}
-        </p>
-      ) : null}
+      {typeof error === 'string' ? <Error>{error}</Error> : null}
     </div>
   );
 });

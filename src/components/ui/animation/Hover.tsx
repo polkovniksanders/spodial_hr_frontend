@@ -4,9 +4,10 @@ import type { PropsWithChildren } from 'react';
 export default function Hover({ children }: PropsWithChildren) {
   return (
     <motion.div
+      className={'flex'}
       whileHover={{
         scale: 1.1,
-        transition: { duration: 0.3, ease: 'easeOut' },
+        transition: { duration: 0.25, ease: 'linear' },
       }}
       whileTap={{ scale: 0.8 }}
     >

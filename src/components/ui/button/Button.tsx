@@ -5,6 +5,7 @@ import {
   type ButtonVariant,
 } from '@/components/ui/button/button.interface';
 import Hover from '@/components/ui/animation/Hover';
+import Border from '@/components/ui/animation/Border';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
@@ -28,10 +29,10 @@ export function Button({
   };
 
   return (
-    <Hover>
+    <Border>
       <button className={clsx(base, variants[variant], className)} {...rest}>
         {children}
       </button>
-    </Hover>
+    </Border>
   );
 }
