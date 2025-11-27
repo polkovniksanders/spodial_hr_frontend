@@ -1,15 +1,27 @@
 'use client';
 
-import { useState } from 'react';
-import CalendarPopup from '@/features/calendar/ui/CalendarPopup';
+import { useEffect, useState } from 'react';
 import { usePopup } from '@/shared/hooks/usePopup';
 import { CalendarMonth } from '@/features/calendar/ui/CalendarMonth';
 import CalendarCells from '@/features/calendar/ui/CalendarCells';
+import CalendarDays from '@/features/calendar/ui/CalendarDays';
+import { CalendarPopup } from '@/features/calendar/ui/CalendarPopup';
 
 export default function Calendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  const { popupPos, openPopup, popupRef, closePopup } = usePopup();
+  const { popupPos, openPopup, popupRef, closePopup, width } = usePopup();
+
+  useEffect(() => {
+    async function fetchEvents() {
+      const res = await fetch('/api/calendar/events', {
+        method: 'GET',
+        cache: 'no-store',
+      });
+    }
+
+    fetchEvents();
+  }, []);
 
   const onCellClick = (e: React.MouseEvent<HTMLDivElement>) => {
     openPopup(e, 292);
@@ -21,17 +33,17 @@ export default function Calendar() {
         currentMonth={currentMonth}
         setCurrentMonth={setCurrentMonth}
       />
-      {/* <CalendarDays />*/}
+      <CalendarDays />
       <CalendarCells onCellClick={onCellClick} currentMonth={currentMonth} />
 
       {popupPos && (
-        <div ref={popupRef}>
-          <CalendarPopup
-            onClose={closePopup}
-            top={popupPos.top}
-            left={popupPos.left}
-          />
-        </div>
+        <CalendarPopup
+          width={width}
+          ref={popupRef}
+          onClose={closePopup}
+          top={popupPos.top}
+          left={popupPos.left}
+        />
       )}
     </>
   );

@@ -1,14 +1,19 @@
+'use client';
+
 import clsx from 'clsx';
 import { usePathname, useRouter } from 'next/navigation';
 import type { MenuProps } from '@/features/menu/service/menu.interface';
+import { Calendar } from 'lucide-react';
 
-export default function MenuItem({ icon, route, name }: MenuProps) {
+export default function MenuItem({ iconKey, route, name }: MenuProps) {
   const router = useRouter();
   const pathname = usePathname();
 
   const currentPathname = pathname.split('/').filter(Boolean).pop();
-  const Icon = icon;
   const isActive = route === currentPathname;
+
+  const ICONS = { calendar: Calendar };
+  const Icon = ICONS[iconKey];
 
   const clickMenuItem = (route: string) => {
     if (!route || isActive) return;

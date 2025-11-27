@@ -1,12 +1,4 @@
-import type { PropsWithChildren } from 'react';
-
-type Props = PropsWithChildren<{
-  top?: number | string;
-  left?: number | string;
-  right?: number | string;
-  bottom?: number | string;
-  className?: string;
-}>;
+import type { PopupProps } from '@/components/ui/popup/popup.interface';
 
 export default function Popup({
   children,
@@ -15,7 +7,7 @@ export default function Popup({
   right,
   bottom,
   className,
-}: Props) {
+}: PopupProps) {
   return (
     <div
       className={`absolute z-50 ${className ?? ''}`}
