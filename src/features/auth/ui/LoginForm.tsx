@@ -8,10 +8,10 @@ import {
   SIGN_IN_VALUES,
 } from '@/features/auth/utils/options';
 import type { LoginDTO } from '@/features/auth/service/auth.interface';
-import { ROUTES } from '@/shared/utils/routes';
 import { useRouter } from 'next/navigation';
-import { VARIANT_MAPPER, type VariantType } from '@/shared/utils/fieldMapper';
 import FormFooter from '@/features/auth/ui/FormFooter';
+import { VARIANT_MAPPER, type VariantType } from '@/shared/lib/fieldMapper';
+import { ROUTES } from '@/shared/lib/routes';
 
 export default function LoginForm() {
   const router = useRouter();

@@ -8,10 +8,11 @@ import {
   REGISTER_FIELDS,
   REGISTER_FIELDS_VALUES,
 } from '@/features/auth/utils/options';
-import { ROUTES } from '@/shared/utils/routes';
-import { VARIANT_MAPPER, type VariantType } from '@/shared/utils/fieldMapper';
+
 import React from 'react';
-import FormFooter from '@/features/auth/ui/FormFooter'; // Для редиректа в App Router.
+import FormFooter from '@/features/auth/ui/FormFooter';
+import { VARIANT_MAPPER, type VariantType } from '@/shared/lib/fieldMapper';
+import { ROUTES } from '@/shared/lib/routes';
 
 export default function RegisterForm() {
   const router = useRouter();

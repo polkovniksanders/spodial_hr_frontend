@@ -34,11 +34,6 @@ export default function CalendarCells({ currentMonth, onCellClick }: Props) {
 
   const availableHeight = cardContent - calendarMonth;
 
-  console.log('availableHeight', availableHeight);
-  console.log('cardContent', cardContent);
-  console.log('calendarDays', calendarDays);
-  console.log('calendarMonth', calendarMonth);
-
   const weeksCount = Math.ceil(
     (endDate.getTime() - startDate.getTime()) / 86400000 / 7,
   );

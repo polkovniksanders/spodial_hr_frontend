@@ -1,8 +1,10 @@
-import type { LucideIcon } from 'lucide-react';
+import { Calendar } from 'lucide-react';
+
+const ICONS: Record<'calendar', typeof Calendar> = { calendar: Calendar };
 
 export interface MenuProps {
   key: string;
   name: string;
-  icon: LucideIcon;
+  iconKey: keyof typeof ICONS;
   route: string;
 }

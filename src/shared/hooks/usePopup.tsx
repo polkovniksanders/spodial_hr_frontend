@@ -5,6 +5,7 @@ export const usePopup = () => {
     top: number;
     left: number;
   } | null>(null);
+  const [width, setWidth] = useState(100);
 
   const popupRef = useRef<HTMLDivElement>(null);
 
@@ -30,16 +31,12 @@ export const usePopup = () => {
   ) => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
 
-    console.log(rect);
-
+    setWidth(popupWidth);
     const windowWidth = window.innerWidth;
-
-    console.log('windowWidth', windowWidth);
 
     setPopupPos({
       top: rect.top + rect.height / 2,
       left: rect.left + popupWidth - 228,
-      // left: rect.left + popupWidth,
     });
   };
 
@@ -47,5 +44,5 @@ export const usePopup = () => {
     setPopupPos(null);
   };
 
-  return { openPopup, closePopup, popupPos, popupRef };
+  return { openPopup, closePopup, popupPos, popupRef, width };
 };
