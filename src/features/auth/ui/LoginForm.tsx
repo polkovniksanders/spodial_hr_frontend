@@ -1,17 +1,19 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
+
+import FormFooter from '@/features/auth/ui/FormFooter';
 import {
   BUTTON_TEXT,
   SIGN_IN_FIELDS,
   SIGN_IN_VALUES,
 } from '@/features/auth/utils/options';
-import type { LoginDTO } from '@/features/auth/service/auth.interface';
-import { useRouter } from 'next/navigation';
-import FormFooter from '@/features/auth/ui/FormFooter';
 import { VARIANT_MAPPER, type VariantType } from '@/shared/lib/fieldMapper';
 import { ROUTES } from '@/shared/lib/routes';
+
+import type { LoginDTO } from '@/features/auth/service/auth.interface';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -38,15 +40,17 @@ export default function LoginForm() {
 
       router.replace(ROUTES.DASHBOARD.CALENDAR);
       router.refresh();
-    } catch (err) {
-      console.error('Network or unexpected error during register:', err);
+    } catch (error) {
+      console.error('Network or unexpected error during register:', error);
     }
   };
+
+  const FORM_ID = 'login-form';
 
   return (
     <>
       <form
-        id='login-form'
+        id={FORM_ID}
         onSubmit={handleSubmit(onSubmit)}
         className='w-full flex flex-col gap-[30px]'
       >
@@ -73,6 +77,7 @@ export default function LoginForm() {
       </form>
 
       <FormFooter
+        formId={FORM_ID}
         primaryButton={BUTTON_TEXT.LOGIN}
         primaryText={BUTTON_TEXT.REGISTER}
         secondaryText={"Don't have an account?"}
