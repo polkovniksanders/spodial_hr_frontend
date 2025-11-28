@@ -1,12 +1,14 @@
-import Popup from '@/components/ui/popup/Popup';
-import { forwardRef } from 'react';
-import { USER_MENU } from '@/features/user/lib/options';
-import type { PopupComponentProps } from '@/components/ui/popup/popup.interface';
 import { useRouter } from 'next/navigation';
+import { forwardRef } from 'react';
+
+import Popup from '@/components/ui/popup/Popup';
+import { USER_MENU } from '@/features/user/lib/options';
 import { ROUTES } from '@/shared/lib/routes';
 
+import type { PopupComponentProps } from '@/components/ui/popup/popup.interface';
+
 export const UserMenuPopup = forwardRef<HTMLDivElement, PopupComponentProps>(
-  ({ width, onClose, top, left }, ref) => {
+  ({ width, top, left }, ref) => {
     const router = useRouter();
 
     const logout = async () => {
@@ -14,16 +16,12 @@ export const UserMenuPopup = forwardRef<HTMLDivElement, PopupComponentProps>(
         const res = await fetch('/api/auth/logout', { method: 'POST' });
 
         if (!res.ok) {
-          const data = await res.json();
-          console.error('Logout error:', data.error);
           return;
         }
 
         router.refresh();
         router.push(ROUTES.AUTH.LOGIN);
-      } catch (err) {
-        console.error('Network error during logout:', err);
-      }
+      } catch {}
     };
 
     return (
@@ -45,3 +43,4 @@ export const UserMenuPopup = forwardRef<HTMLDivElement, PopupComponentProps>(
     );
   },
 );
+UserMenuPopup.displayName = 'UserMenuPopup';

@@ -35,15 +35,12 @@ export default function RegisterForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        console.log('data.error', data.error);
-        setError('email', { message: data.error });
-        return;
+        return setError('email', { message: data.error });
       }
 
       router.replace(ROUTES.DASHBOARD.CALENDAR);
       router.refresh();
     } catch (error) {
-      console.log('err', error);
       setError('email', { message: String(error) });
     }
   };

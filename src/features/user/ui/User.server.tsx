@@ -1,7 +1,7 @@
-import { getUser } from '@/shared/lib/get-user';
-import UserClient from '@/features/user/ui/User.client';
 import Error from '@/components/ui/input/Error';
 import { USER_ERRORS } from '@/features/user/lib/options';
+import UserClient from '@/features/user/ui/User.client';
+import { getUser } from '@/shared/lib/get-user';
 
 function ErrorBanner({ type }: { type: keyof typeof USER_ERRORS }) {
   const { icon, message } = USER_ERRORS[type];
@@ -14,13 +14,21 @@ function ErrorBanner({ type }: { type: keyof typeof USER_ERRORS }) {
 }
 
 export default async function UserServer() {
+  let user: Awaited<ReturnType<typeof getUser>> | null = null;
+  let errorType: keyof typeof USER_ERRORS | null = null;
+
   try {
-    const user = await getUser();
-
-    if (!user) return <ErrorBanner type='notFound' />;
-
-    return <UserClient {...user} />;
-  } catch (err) {
-    return <ErrorBanner type='server' />;
+    user = await getUser();
+    if (!user) {
+      errorType = 'notFound';
+    }
+  } catch {
+    errorType = 'server';
   }
+
+  if (errorType) {
+    return <ErrorBanner type={errorType} />;
+  }
+
+  return <UserClient {...user!} />;
 }

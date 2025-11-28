@@ -1,8 +1,9 @@
 'use client';
 
 import Avatar from '@/features/user/ui/Avatar';
-import { usePopup } from '@/shared/hooks/usePopup';
 import { UserMenuPopup } from '@/features/user/ui/UserMenuPopup';
+import { usePopup } from '@/shared/hooks/usePopup';
+
 import type { UserProps } from '@/features/user/lib/user.interface';
 
 export default function UserClient({ name, email }: UserProps) {

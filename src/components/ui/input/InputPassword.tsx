@@ -10,14 +10,14 @@ type Props = Omit<InputProps, 'type'>;
 export default function PasswordInput(props: Props) {
   const [visible, setVisible] = useState(false);
 
-  const isTouched = props.value?.length >= 1;
+  const shouldShowToggle = props.value?.length >= 1;
 
   return (
     <Input
       {...props}
       type={visible ? 'text' : 'password'}
       endAdornment={
-        isTouched && (
+        shouldShowToggle && (
           <Hover>
             <button
               type='button'

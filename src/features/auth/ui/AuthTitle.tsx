@@ -1,5 +1,6 @@
 import { H1 } from '@/components/ui/typography/H1';
 import { AUTH_TITLE_VARIANT } from '@/features/auth/utils/options';
+
 import type { AuthTitleVariant } from '@/features/auth/service/auth.interface';
 
 export default function AuthTitle({ type }: { type: AuthTitleVariant }) {

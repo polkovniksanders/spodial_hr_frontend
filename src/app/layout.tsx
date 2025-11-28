@@ -1,10 +1,11 @@
-import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { PublicEnvScript } from 'next-runtime-env';
 
 import './globals.css';
-import type { ReactNode } from 'react';
 import Providers from '@/app/Providers';
+
+import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 
 const getFont = Inter({
   variable: '--font-inter-sans',

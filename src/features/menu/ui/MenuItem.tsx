@@ -1,36 +1,36 @@
 'use client';
 
 import clsx from 'clsx';
-import { usePathname, useRouter } from 'next/navigation';
-import type { MenuProps } from '@/features/menu/service/menu.interface';
 import { Calendar } from 'lucide-react';
+import { useRouter, useSelectedLayoutSegment } from 'next/navigation';
 
-export default function MenuItem({ iconKey, route, name }: MenuProps) {
+import { ICONS } from '@/features/menu/lib/options';
+
+import type { MenuProps } from '@/features/menu/service/menu.interface';
+
+export default function MenuItem({ item }: { item: MenuProps }) {
   const router = useRouter();
-  const pathname = usePathname();
+  const segment = useSelectedLayoutSegment();
 
-  const currentPathname = pathname.split('/').filter(Boolean).pop();
-  const isActive = route === currentPathname;
+  const isActive = item.route === segment;
 
-  const ICONS = { calendar: Calendar };
-  const Icon = ICONS[iconKey];
-
-  const clickMenuItem = (route: string) => {
-    if (!route || isActive) return;
-    router.push(route);
-  };
+  const Icon = item.iconKey
+    ? (ICONS[item.iconKey as keyof typeof ICONS] ?? Calendar)
+    : null;
 
   return (
-    <div
-      onClick={() => clickMenuItem(route)}
+    <button
+      type='button'
+      onClick={() => !isActive && item.route && router.push(item.route)}
       className={clsx(
-        'flex px-[24px] py-[8px] rounded-[12px] items-center gap-2 transition-colors',
-        isActive ? 'bg-white text-primary' : 'bg-transparent text-grey',
-        'hover:cursor-pointer hover:text-grey hover:bg-hover',
+        'cursor-pointer flex w-full items-center gap-2 rounded-[12px] px-6 py-2 text-left transition-colors',
+        'hover:bg-hover',
+        isActive ? 'bg-white text-primary' : 'text-grey',
       )}
+      aria-current={isActive ? 'page' : undefined}
     >
-      <Icon size={18} />
-      <span>{name}</span>
-    </div>
+      {Icon && <Icon size={18} aria-hidden='true' className='shrink-0' />}
+      <span>{item.name}</span>
+    </button>
   );
 }
