@@ -1,21 +1,93 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
-import { fixupConfigRules } from "@eslint/compat"; // <--- ИМПОРТИРУЕМ ФИКС
+import { defineConfig, globalIgnores } from 'eslint/config';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
+import securityPlugin from 'eslint-plugin-security';
+import unicornPlugin from 'eslint-plugin-unicorn';
+import sonarjsPlugin from 'eslint-plugin-sonarjs';
+import importPlugin from 'eslint-plugin-import';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+export default defineConfig([
+  ...nextVitals,
+  ...nextTs,
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+  {
+    plugins: {
+      security: securityPlugin,
+    },
+    rules: {
+      ...securityPlugin.configs.recommended.rules,
+      "security/detect-object-injection": "off",
+      "security/detect-non-literal-regexp": "warn",
+      "security/detect-eval-with-expression": "error",
+    },
+  },
 
-const nextConfig = fixupConfigRules(
-  compat.extends("next/core-web-vitals", "next/typescript")
-);
+  {
+    plugins: {
+      unicorn: unicornPlugin,
+      sonarjs: sonarjsPlugin,
+    },
+    rules: {
+      ...unicornPlugin.configs.recommended.rules,
+      ...sonarjsPlugin.configs.recommended.rules,
 
-const eslintConfig = [
-  ...nextConfig,
+      "unicorn/prevent-abbreviations": "off",
+      "unicorn/filename-case": "off",
+      "unicorn/no-null": "off",
+      "unicorn/prefer-top-level-await": "off",
+      "unicorn/no-console-spaces": "warn",
+      "unicorn/no-useless-undefined": "warn",
+      "sonarjs/no-duplicate-string": ["warn", { threshold: 4 }],
+      "sonarjs/cognitive-complexity": ["warn", 15],
+    },
+  },
+
+  {
+    plugins: {
+      import: importPlugin,
+    },
+    settings: {
+      "import/resolver": {
+        typescript: true,
+        node: true,
+      },
+    },
+    rules: {
+      "import/no-unresolved": "error",
+      "import/order": [
+        "warn",
+        {
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+            "object",
+            "type",
+          ],
+          "newlines-between": "always",
+          alphabetize: { order: "asc", caseInsensitive: true },
+        },
+      ],
+      "import/no-duplicates": "warn",
+    },
+  },
+
+  {
+    files: ["**/*.{js,ts,tsx}"],
+    rules: {
+      "no-console": "warn",
+      "no-debugger": "error",
+      "no-alert": "error",
+      "no-constant-condition": "error",
+      "@next/next/no-sync-scripts": "error",
+      "@next/next/no-css-tags": "warn",
+      "@next/next/no-title-in-document-head": "warn",
+    },
+  },
+
   {
     rules: {
       "react-hooks/exhaustive-deps": "off",
@@ -25,9 +97,13 @@ const eslintConfig = [
       "@typescript-eslint/no-explicit-any": "off",
     },
   },
-  {
-    ignores: [".next/*", "node_modules/*"],
-  },
-  ...compat.extends("prettier")
-];
-export default eslintConfig;
+
+  globalIgnores([
+    '.next/**',
+    'node_modules/**',
+    'out/**',
+    'build/**',
+    'public/**',
+    '*.d.ts',
+  ]),
+]);
