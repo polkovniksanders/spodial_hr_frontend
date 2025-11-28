@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import Input, { type Props as InputProps } from './Input';
 import { Eye, EyeOff } from 'lucide-react';
+import React, { useState } from 'react';
+
 import Hover from '@/components/ui/animation/Hover';
+
+import Input, { type Props as InputProps } from './Input';
 
 type Props = Omit<InputProps, 'type'>;
 
 export default function PasswordInput(props: Props) {
   const [visible, setVisible] = useState(false);
 
-  const isTouched = props.value.length >= 1;
+  const isTouched = props.value?.length >= 1;
 
   return (
     <Input
@@ -19,10 +21,15 @@ export default function PasswordInput(props: Props) {
           <Hover>
             <button
               type='button'
-              onClick={() => setVisible(v => !v)}
+              onClick={() => setVisible(prevState => !prevState)}
+              aria-label={visible ? 'Show password' : 'Hide password'}
               className='cursor-pointer text-primary'
             >
-              {visible ? <EyeOff /> : <Eye />}
+              {visible ? (
+                <EyeOff aria-hidden='true' />
+              ) : (
+                <Eye aria-hidden='true' />
+              )}
             </button>
           </Hover>
         )

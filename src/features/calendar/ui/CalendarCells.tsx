@@ -9,6 +9,7 @@ import {
   startOfWeek,
 } from 'date-fns';
 import { useSelector } from 'react-redux';
+
 import type { RootState } from '@/store/store';
 
 interface Props {
@@ -25,9 +26,6 @@ export default function CalendarCells({ currentMonth, onCellClick }: Props) {
   const cardContent = useSelector(
     (state: RootState) => state.elementSizes.sizes['cardContent'],
   );
-  const calendarDays = useSelector(
-    (state: RootState) => state.elementSizes.sizes['calendarDays'],
-  );
   const calendarMonth = useSelector(
     (state: RootState) => state.elementSizes.sizes['calendarMonth'],
   );
@@ -35,7 +33,7 @@ export default function CalendarCells({ currentMonth, onCellClick }: Props) {
   const availableHeight = cardContent - calendarMonth;
 
   const weeksCount = Math.ceil(
-    (endDate.getTime() - startDate.getTime()) / 86400000 / 7,
+    (endDate.getTime() - startDate.getTime()) / 86_400_000 / 7,
   );
 
   const rows = [];
@@ -56,7 +54,7 @@ export default function CalendarCells({ currentMonth, onCellClick }: Props) {
               relative flex-1
               p-2
               border-table
-              ${!isSameMonth(cloneDay, monthStart) ? 'text-gray-300' : ''}
+              ${isSameMonth(cloneDay, monthStart) ? '' : 'text-gray-300'}
               ${rowIndex === weeksCount - 1 ? 'border-b-0' : ''}     
               ${i === 0 ? 'border-l-0 ' : 'border-b-0'}
               ${i === 6 ? 'border-r-0' : ' border-b-0'}
