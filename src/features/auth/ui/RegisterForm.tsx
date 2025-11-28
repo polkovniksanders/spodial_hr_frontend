@@ -1,18 +1,19 @@
 'use client';
 
-import { useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import type { RegisterDTO } from '@/features/auth/service/auth.interface';
+import React from 'react';
+import { useForm, Controller } from 'react-hook-form';
+
+import FormFooter from '@/features/auth/ui/FormFooter';
 import {
   BUTTON_TEXT,
   REGISTER_FIELDS,
   REGISTER_FIELDS_VALUES,
 } from '@/features/auth/utils/options';
-
-import React from 'react';
-import FormFooter from '@/features/auth/ui/FormFooter';
 import { VARIANT_MAPPER, type VariantType } from '@/shared/lib/fieldMapper';
 import { ROUTES } from '@/shared/lib/routes';
+
+import type { RegisterDTO } from '@/features/auth/service/auth.interface';
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -34,23 +35,25 @@ export default function RegisterForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        console.log('data.error ', data.error);
+        console.log('data.error', data.error);
         setError('email', { message: data.error });
         return;
       }
 
       router.replace(ROUTES.DASHBOARD.CALENDAR);
       router.refresh();
-    } catch (err) {
-      console.log('err', err);
-      setError('email', { message: String(err) });
+    } catch (error) {
+      console.log('err', error);
+      setError('email', { message: String(error) });
     }
   };
+
+  const FORM_ID = 'register-form';
 
   return (
     <>
       <form
-        id='register-form'
+        id={FORM_ID}
         onSubmit={handleSubmit(onSubmit)}
         className='w-full flex flex-col gap-[30px]'
       >
@@ -77,6 +80,7 @@ export default function RegisterForm() {
       </form>
 
       <FormFooter
+        formId={FORM_ID}
         primaryButton={BUTTON_TEXT.GET_STARTED}
         primaryText={`${BUTTON_TEXT.LOGIN} here`}
         secondaryText={'Already have an account?'}
