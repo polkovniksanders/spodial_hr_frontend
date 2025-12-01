@@ -1,27 +1,25 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { usePopup } from '@/shared/hooks/usePopup';
-import { CalendarMonth } from '@/features/calendar/ui/CalendarMonth';
+import { useState } from 'react';
+
 import CalendarCells from '@/features/calendar/ui/CalendarCells';
 import CalendarDays from '@/features/calendar/ui/CalendarDays';
+import { CalendarMonth } from '@/features/calendar/ui/CalendarMonth';
 import { CalendarPopup } from '@/features/calendar/ui/CalendarPopup';
+import { usePopup } from '@/shared/hooks/usePopup';
 
-export default function Calendar() {
+import type { EventProps } from '@/features/calendar/service/event.interface';
+
+interface Props {
+  events: EventProps[];
+}
+
+export default function Calendar({ events }: Props) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
+  console.log('events', events);
+
   const { popupPos, openPopup, popupRef, closePopup, width } = usePopup();
-
-  useEffect(() => {
-    async function fetchEvents() {
-      const res = await fetch('/api/calendar/events', {
-        method: 'GET',
-        cache: 'no-store',
-      });
-    }
-
-    fetchEvents();
-  }, []);
 
   const onCellClick = (e: React.MouseEvent<HTMLDivElement>) => {
     openPopup(e, 292);
@@ -34,7 +32,11 @@ export default function Calendar() {
         setCurrentMonth={setCurrentMonth}
       />
       <CalendarDays />
-      <CalendarCells onCellClick={onCellClick} currentMonth={currentMonth} />
+      <CalendarCells
+        events={events}
+        onCellClick={onCellClick}
+        currentMonth={currentMonth}
+      />
 
       {popupPos && (
         <CalendarPopup

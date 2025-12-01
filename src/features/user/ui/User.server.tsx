@@ -14,21 +14,15 @@ function ErrorBanner({ type }: { type: keyof typeof USER_ERRORS }) {
 }
 
 export default async function UserServer() {
-  let user: Awaited<ReturnType<typeof getUser>> | null = null;
-  let errorType: keyof typeof USER_ERRORS | null = null;
-
   try {
-    user = await getUser();
-    if (!user) {
-      errorType = 'notFound';
-    }
+    const user = await getUser();
+
+    console.log('user', user);
+
+    if (!user) return <ErrorBanner type='notFound' />;
+
+    return <UserClient {...user} />;
   } catch {
-    errorType = 'server';
+    return <ErrorBanner type='server' />;
   }
-
-  if (errorType) {
-    return <ErrorBanner type={errorType} />;
-  }
-
-  return <UserClient {...user!} />;
 }

@@ -6,7 +6,7 @@ import type { PropsWithChildren } from 'react';
 
 export default async function Layout({ children }: PropsWithChildren) {
   return (
-    <div className={'bg-gradient-primary h-screen w-full flex flex-row p-5'}>
+    <div className={'bg-gradient-primary h-full w-full flex flex-row p-5'}>
       <div className={'flex flex-col w-[228px] mr-5'}>
         <Logo />
         <MenuServer />

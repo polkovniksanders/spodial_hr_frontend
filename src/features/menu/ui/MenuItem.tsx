@@ -21,7 +21,9 @@ export default function MenuItem({ item }: { item: MenuProps }) {
   return (
     <button
       type='button'
-      onClick={() => !isActive && item.route && router.push(item.route)}
+      onClick={() =>
+        !isActive && item.route && router.push(`/dashboard/${item.route}`)
+      }
       className={clsx(
         'cursor-pointer flex w-full items-center gap-2 rounded-[12px] px-6 py-2 text-left transition-colors',
         'hover:bg-hover',
