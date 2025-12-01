@@ -1,8 +1,8 @@
+import React, { type PropsWithChildren } from 'react';
+
 import Logo from '@/features/logo/Logo';
 import MenuServer from '@/features/menu/ui/Menu.server';
 import UserServer from '@/features/user/ui/User.server';
-
-import type { PropsWithChildren } from 'react';
 
 export default async function Layout({ children }: PropsWithChildren) {
   return (

@@ -8,13 +8,10 @@ import {
   startOfMonth,
   startOfWeek,
 } from 'date-fns';
-import { useRouter } from 'next/navigation';
 import { type JSX, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import CalendarEvent from '@/features/calendar/ui/CalendarEvent';
-import { CalendarPopup } from '@/features/calendar/ui/CalendarPopup';
-import { usePopup } from '@/shared/hooks/usePopup';
 
 import type { EventProps } from '@/features/calendar/service/event.interface';
 import type { RootState } from '@/store/store';
@@ -32,18 +29,6 @@ export default function CalendarCells({
   onCellClick,
   onEventClick,
 }: Props) {
-  const router = useRouter();
-  const { popupPos, openPopup, popupRef, closePopup, width } = usePopup();
-
-  const viewEvent = (currentEvent: EventProps) => {
-    console.log('currentEvent', currentEvent);
-    router.push(`/dashboard/meeting/${currentEvent.id}?tab=summary`);
-  };
-
-  const open = e => {
-    openPopup(e, 600);
-  };
-
   const cardContent = useSelector(
     (state: RootState) => state.elementSizes.sizes['cardContent'],
   );
@@ -70,8 +55,6 @@ export default function CalendarCells({
   // Группируем события по дню (для быстрого поиска)
   const eventsByDate = useMemo(() => {
     const map = new Map<string, EventProps[]>();
-
-    console.log('events', events);
 
     for (const ev of events) {
       console.log('ev', ev);
@@ -127,12 +110,7 @@ export default function CalendarCells({
             {/* События в этот день (показываем до 3–4, остальное — "+N") */}
             <div className='flex flex-col gap-[4px] overflow-hidden'>
               {dayEvents.map(event => (
-                <CalendarEvent
-                  key={event.id}
-                  event={event}
-                  open={open}
-                  viewEvent={viewEvent}
-                />
+                <CalendarEvent key={event.id} event={event} />
               ))}
               {dayEvents.length > 4 && (
                 <div className='text-xs text-gray-500 text-center'>
@@ -169,19 +147,5 @@ export default function CalendarCells({
     onEventClick,
   ]);
 
-  return (
-    <>
-      <div className='flex flex-col'>{rows}</div>
-
-      {popupPos && (
-        <CalendarPopup
-          width={width}
-          ref={popupRef}
-          onClose={closePopup}
-          top={popupPos.top}
-          left={popupPos.left}
-        />
-      )}
-    </>
-  );
+  return <div className='flex flex-col'>{rows}</div>;
 }

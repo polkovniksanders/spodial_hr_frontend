@@ -1,0 +1,19 @@
+import type { ReactNode } from 'react';
+
+interface Props {
+  children: ReactNode;
+  className?: string;
+}
+
+export function H4({ children, className }: Props) {
+  return (
+    <h4
+      style={{
+        lineHeight: 'normal',
+      }}
+      className={`text-[28px] font-normal text-[#344137] font-inter ${className}`}
+    >
+      {children}
+    </h4>
+  );
+}
