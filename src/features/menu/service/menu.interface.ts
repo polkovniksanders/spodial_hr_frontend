@@ -1,4 +1,4 @@
-import type { ICONS } from '@/features/menu/utils/options';
+import type { ICONS } from '@/features/menu/lib/options';
 
 export interface MenuProps {
   key: string;
