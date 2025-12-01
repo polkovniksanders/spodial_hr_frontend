@@ -1,48 +1,34 @@
-import { useEffect, useRef, useState } from 'react';
+// shared/hooks/usePopup.ts
+'use client';
 
-export const usePopup = () => {
-  const [popupPos, setPopupPos] = useState<{
-    top: number;
-    left: number;
-  } | null>(null);
-  const [width, setWidth] = useState(100);
+import { type ReactNode } from 'react';
 
-  const popupRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const clickOutside = (event: MouseEvent) => {
-      if (
-        popupRef.current &&
-        !popupRef.current.contains(event.target as Node)
-      ) {
-        setPopupPos(null);
-      }
-    };
-
-    document.addEventListener('mousedown', clickOutside);
-    return () => {
-      document.removeEventListener('mousedown', clickOutside);
-    };
-  }, []);
-
-  const openPopup = (
-    e: React.MouseEvent<HTMLDivElement>,
-    popupWidth: number,
-  ) => {
-    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-
-    setWidth(popupWidth);
-    const windowWidth = window.innerWidth;
-
-    setPopupPos({
-      top: rect.top + rect.height / 2,
-      left: rect.left + popupWidth - 228,
-    });
-  };
-
-  const closePopup = () => {
-    setPopupPos(null);
-  };
-
-  return { openPopup, closePopup, popupPos, popupRef, width };
+type PopupOptions = {
+  content: ReactNode;
+  width?: number | string;
+  preferredPosition?: 'top' | 'bottom' | 'left' | 'right';
+  offset?: number;
 };
+
+export type OpenPopup = (
+  anchorEl: HTMLElement | null,
+  options: PopupOptions,
+) => void;
+
+export function usePopup() {
+  const open: OpenPopup = (anchorEl, options) => {
+    if (!anchorEl) return;
+
+    globalThis.dispatchEvent(
+      new CustomEvent('open-global-popup', {
+        detail: { anchorEl, ...options },
+      }),
+    );
+  };
+
+  const close = () => {
+    globalThis.dispatchEvent(new CustomEvent('close-global-popup'));
+  };
+
+  return { open, close };
+}

@@ -1,0 +1,43 @@
+import { TabLink } from '@/features/meeting/TabLink';
+
+interface Props {
+  currentTab: string | undefined;
+}
+
+const items = [
+  {
+    title: 'summary',
+    link: 'summary',
+  },
+  {
+    title: 'followup',
+    link: 'followup',
+  },
+  {
+    title: 'transcript',
+    link: 'transcript',
+  },
+];
+
+export default function ButtonsRow({ currentTab }: Props) {
+  return items.map((item, index) => {
+    const isActive = item.link === currentTab;
+
+    return (
+      <TabLink key={index} tab={item.link}>
+        <button
+          className={`border-[var(--color-border-primary)] border-1 cursor-pointer px-2.5 p-2 text-center text-sm  transition-all
+  ${isActive ? 'bg-primary text-white' : ''}
+  ${index === 0 ? 'rounded-l-full ' : ''}
+  ${index === items.length - 1 ? 'rounded-r-full' : ''}
+  ${index > 0 && index < items.length - 1 ? 'border-l border-r ' : ''}`}
+          type='button'
+        >
+          <p className={isActive ? 'text-white' : 'text-primary'}>
+            {item.title}
+          </p>
+        </button>
+      </TabLink>
+    );
+  });
+}

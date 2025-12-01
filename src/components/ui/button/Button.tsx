@@ -1,11 +1,12 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import clsx from 'clsx';
+
+import Border from '@/components/ui/animation/Border';
 import {
   BUTTON_VARIANT,
   type ButtonVariant,
 } from '@/components/ui/button/button.interface';
-import Hover from '@/components/ui/animation/Hover';
-import Border from '@/components/ui/animation/Border';
+
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;

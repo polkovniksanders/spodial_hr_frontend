@@ -1,7 +1,7 @@
 import Card from '@/components/ui/card/Card';
 import AuthTitle from '@/features/auth/ui/AuthTitle';
-import { AUTH_TITLE_VARIANT } from '@/features/auth/utils/options';
 import LoginForm from '@/features/auth/ui/LoginForm';
+import { AUTH_TITLE_VARIANT } from '@/features/auth/utils/options';
 
 export default function Page() {
   return (

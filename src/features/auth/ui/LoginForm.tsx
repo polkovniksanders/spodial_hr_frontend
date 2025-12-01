@@ -40,9 +40,7 @@ export default function LoginForm() {
 
       router.replace(ROUTES.DASHBOARD.CALENDAR);
       router.refresh();
-    } catch (error) {
-      console.error('Network or unexpected error during register:', error);
-    }
+    } catch {}
   };
 
   const FORM_ID = 'login-form';

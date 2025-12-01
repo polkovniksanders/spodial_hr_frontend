@@ -1,13 +1,17 @@
-import Card from '@/components/ui/card/Card';
-import Calendar from '@/features/calendar/ui/Calendar';
-import CalendarOnboardingTrigger from '@/features/calendar/widget/CalendarOnboardingTrigger';
-import type { PropsWithChildren } from 'react';
 import { Suspense } from 'react';
+
+import Card from '@/components/ui/card/Card';
+import SpinLoader from '@/components/ui/layout/SpinLoader';
+import Calendar from '@/features/calendar/ui/Calendar';
+import CalendarServer from '@/features/calendar/ui/Calendar.server';
+import CalendarOnboardingTrigger from '@/features/calendar/ui/CalendarOnboardingTrigger';
 import { getSources } from '@/shared/lib/get-sources';
 
+import type { PropsWithChildren } from 'react';
+
 export const metadata = {
-  title: 'Календарь',
-  description: 'Ваш календарь событий',
+  title: 'Calendar',
+  description: 'Calendar events',
 };
 
 const Wrapper = ({ children }: PropsWithChildren) => (
@@ -22,8 +26,8 @@ const UnattachedView = () => (
 
 const AttachedView = () => (
   <Wrapper>
-    <Suspense fallback={<div></div>}>
-      <Calendar />
+    <Suspense fallback={<SpinLoader />}>
+      <CalendarServer />
     </Suspense>
   </Wrapper>
 );

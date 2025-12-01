@@ -1,6 +1,4 @@
-import { Calendar } from 'lucide-react';
-
-const ICONS: Record<'calendar', typeof Calendar> = { calendar: Calendar };
+import type { ICONS } from '@/features/menu/lib/options';
 
 export interface MenuProps {
   key: string;
