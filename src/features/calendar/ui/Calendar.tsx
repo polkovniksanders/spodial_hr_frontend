@@ -17,12 +17,10 @@ interface Props {
 export default function Calendar({ events }: Props) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  console.log('events', events);
-
   const { popupPos, openPopup, popupRef, closePopup, width } = usePopup();
 
   const onCellClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    openPopup(e, 292);
+    // openPopup(e, 292);
   };
 
   return (

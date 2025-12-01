@@ -13,6 +13,8 @@ import { type JSX, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import CalendarEvent from '@/features/calendar/ui/CalendarEvent';
+import { CalendarPopup } from '@/features/calendar/ui/CalendarPopup';
+import { usePopup } from '@/shared/hooks/usePopup';
 
 import type { EventProps } from '@/features/calendar/service/event.interface';
 import type { RootState } from '@/store/store';
@@ -31,11 +33,15 @@ export default function CalendarCells({
   onEventClick,
 }: Props) {
   const router = useRouter();
+  const { popupPos, openPopup, popupRef, closePopup, width } = usePopup();
 
   const viewEvent = (currentEvent: EventProps) => {
     console.log('currentEvent', currentEvent);
-
     router.push(`/dashboard/meeting/${currentEvent.id}?tab=summary`);
+  };
+
+  const open = e => {
+    openPopup(e, 600);
   };
 
   const cardContent = useSelector(
@@ -124,6 +130,7 @@ export default function CalendarCells({
                 <CalendarEvent
                   key={event.id}
                   event={event}
+                  open={open}
                   viewEvent={viewEvent}
                 />
               ))}
@@ -162,5 +169,19 @@ export default function CalendarCells({
     onEventClick,
   ]);
 
-  return <div className='flex flex-col'>{rows}</div>;
+  return (
+    <>
+      <div className='flex flex-col'>{rows}</div>
+
+      {popupPos && (
+        <CalendarPopup
+          width={width}
+          ref={popupRef}
+          onClose={closePopup}
+          top={popupPos.top}
+          left={popupPos.left}
+        />
+      )}
+    </>
+  );
 }
