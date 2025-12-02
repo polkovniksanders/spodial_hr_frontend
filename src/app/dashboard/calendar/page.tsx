@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import Card from '@/components/ui/card/Card';
 import SpinLoader from '@/components/ui/layout/spin-loader';
 import CalendarServer from '@/features/calendar/ui/calendar.server';
-import CalendarOnboardingTrigger from '@/features/calendar/ui/CalendarOnboardingTrigger';
+import OnboardingTrigger from '@/features/calendar/ui/onboarding/onboarding-trigger';
 import { getSources } from '@/shared/lib/get-sources';
 
 import type { Metadata } from 'next';
@@ -20,7 +20,7 @@ const Wrapper = ({ children }: PropsWithChildren) => (
 
 const UnattachedView = () => (
   <Wrapper>
-    <CalendarOnboardingTrigger />
+    <OnboardingTrigger />
   </Wrapper>
 );
 

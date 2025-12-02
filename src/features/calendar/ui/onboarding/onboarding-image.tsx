@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { onboardingImageOptions } from '@/features/calendar/utils/options';
+
+import { onboardingImageOptions } from '@/features/calendar/lib/options';
 
 export default function OnboardingImage() {
   return (

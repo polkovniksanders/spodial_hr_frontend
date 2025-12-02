@@ -11,7 +11,7 @@ import type { UserProps } from '@/features/user/service/user.interface';
 export default function UserClient({ name, email }: UserProps) {
   const anchorRef = useRef<HTMLDivElement>(null);
 
-  const { open } = usePopup();
+  const { open, close } = usePopup();
 
   const handleOpen = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -23,7 +23,7 @@ export default function UserClient({ name, email }: UserProps) {
     open(anchorRef.current, {
       width: 123,
       preferredPosition: 'bottom',
-      content: <UserMenuPopup />,
+      content: <UserMenuPopup onClose={close} />,
     });
   };
 

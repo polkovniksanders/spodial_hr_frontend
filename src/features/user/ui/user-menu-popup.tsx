@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { USER_MENU } from '@/features/user/lib/options';
 import { ROUTES } from '@/shared/lib/routes';
 
-export const UserMenuPopup = () => {
+export const UserMenuPopup = ({ onClose }: { onClose: () => void }) => {
   const router = useRouter();
 
   const logout = async () => {
@@ -14,6 +14,7 @@ export const UserMenuPopup = () => {
         return;
       }
 
+      onClose?.();
       router.refresh();
       router.push(ROUTES.AUTH.LOGIN);
     } catch {}
