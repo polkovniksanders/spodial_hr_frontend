@@ -2,11 +2,12 @@ import { Suspense } from 'react';
 
 import ButtonsRow from '@/components/ui/button/ButtonsRow';
 import Card from '@/components/ui/card/Card';
-import SpinLoader from '@/components/ui/layout/SpinLoader';
-import FollowUp from '@/features/meeting/ui/follow-up/FollowUp';
+import SpinLoader from '@/components/ui/layout/spin-loader';
+import { getSummary } from '@/features/meeting/service/get-summary';
+import FollowUp from '@/features/meeting/ui/follow-up/follow-up';
 import MeetingHeader from '@/features/meeting/ui/MeetingHeader';
 import SummaryServer from '@/features/meeting/ui/overview/Summary.server';
-import { TranscriptServer } from '@/features/meeting/ui/transcript/Transcript.server';
+import TranscriptWrapper from '@/features/transcript/transcript-wrapper';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -17,20 +18,20 @@ export default async function Page({ params, searchParams }: PageProps) {
   const { id } = await params;
   const { tab } = await searchParams;
 
+  const summary = await getSummary(id);
+  if (!summary) return null;
+  const data = summary.data;
+
   return (
-    <Card className='min-h-full h-full'>
-      <MeetingHeader />
+    <Card className='min-h-full h-full overflow-x-hidden overflow-y-scroll'>
+      <MeetingHeader title={data.title} />
 
       <div className='my-6 px-10'>
         <ButtonsRow currentTab={tab} />
       </div>
 
-      <div className='mt-8 px-10'>
-        {tab === 'summary' && (
-          <Suspense fallback={<SpinLoader />}>
-            <SummaryServer id={id} />
-          </Suspense>
-        )}
+      <div className='mt-8 px-10 '>
+        {tab === 'summary' && <SummaryServer id={id} data={data} />}
         {tab === 'followup' && (
           <Suspense fallback={<SpinLoader />}>
             <FollowUp />
@@ -38,7 +39,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         )}
         {tab === 'transcript' && (
           <Suspense fallback={<SpinLoader />}>
-            <TranscriptServer id={id} />
+            <TranscriptWrapper id={id} />{' '}
           </Suspense>
         )}
       </div>

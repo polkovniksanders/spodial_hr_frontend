@@ -1,27 +1,24 @@
 'use client';
 
-import { Circle, CircleCheckBig } from 'lucide-react'; // пример импорта
+import { Circle, CircleCheckBig } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react';
 
-import { EventPopup } from '@/features/calendar/ui/EventPopup';
+import { EventPopup } from '@/features/event/ui/event-popup';
 import { usePopup } from '@/shared/hooks/usePopup';
 import { formatDate } from '@/shared/lib/dateFormatter';
 import { isEventPast } from '@/shared/lib/isEventPast';
 
-import type { EventProps } from '@/features/calendar/service/event.interface';
+import type { EventProps } from '@/features/event/service/event.interface';
 
-interface Props {
-  event: EventProps;
-}
-
-const CalendarEvent = ({ event }: Props) => {
-  const router = useRouter();
+const CalendarEvent = ({ event }: { event: EventProps }) => {
   const { id, title } = event;
 
+  const isPast = isEventPast(event.starts_at);
+
+  const router = useRouter();
   const { open, close } = usePopup();
   const anchorRef = useRef<HTMLDivElement>(null);
-  const isPast = isEventPast(event.ends_at);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -30,7 +27,6 @@ const CalendarEvent = ({ event }: Props) => {
       router.push(`/dashboard/meeting/${id}?tab=summary`);
     } else {
       if (!anchorRef.current) {
-        console.warn('anchorRef.current is null!');
         return;
       }
 
@@ -44,7 +40,6 @@ const CalendarEvent = ({ event }: Props) => {
 
   return (
     <div
-      key={id}
       ref={anchorRef}
       onClick={e => {
         handleClick(e);
@@ -58,7 +53,9 @@ const CalendarEvent = ({ event }: Props) => {
           <p className='text-xs line-through'>{formatDate(event.ends_at)}</p>
         </div>
       )}
-      <p className='text-xs'>{title}</p>
+      <p className='text-xs truncate overflow-hidden text-ellipsis whitespace-nowrap'>
+        {title}
+      </p>
     </div>
   );
 };

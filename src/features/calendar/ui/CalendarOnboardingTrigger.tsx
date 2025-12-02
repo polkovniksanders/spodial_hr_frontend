@@ -1,15 +1,12 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { H1 } from '@/components/ui/typography/H1';
 import OnboardingImage from '@/features/calendar/ui/onboarding/OnboardingImage';
-import { getSources } from '@/shared/lib/get-sources';
 
 export default function CalendarOnboardingTrigger() {
-  const popupRef = useRef<Window | null>(null);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const channelRef = useRef<BroadcastChannel | null>(null);
 
   const router = useRouter();
@@ -40,7 +37,6 @@ export default function CalendarOnboardingTrigger() {
 
       const { data } = await res.json();
 
-      // Открываем попап
       const popup = window.open(
         data.redirect,
         'google_oauth',
@@ -50,10 +46,9 @@ export default function CalendarOnboardingTrigger() {
       );
 
       if (!popup) {
+        // eslint-disable-next-line no-alert
         alert('Разрешите всплывающие окна');
       }
-
-      // Больше НЕ проверяем popup.closed — это сломано навсегда
     } catch (error) {
       console.error(error);
     }

@@ -1,10 +1,9 @@
 import { Clock4, TextAlignJustify, Video } from 'lucide-react';
 
-import type { EventProps } from '@/features/calendar/service/event.interface';
+import type { EventProps } from '@/features/event/service/event.interface';
 
 function formatDate(dateString: string) {
   const date = new Date(dateString.replace(' ', 'T'));
-  // заменяем пробел на T, чтобы JS корректно понял ISO-формат
   return new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     month: 'long',
