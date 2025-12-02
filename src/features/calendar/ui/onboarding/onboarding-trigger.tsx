@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 
 import { attachCalendarActions } from '@/app/actions/attach-calendar-actions';
@@ -9,28 +10,30 @@ import OnboardingImage from './onboarding-image';
 
 export default function OnboardingTrigger() {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const handleAttach = () => {
     startTransition(async () => {
       const url = await attachCalendarActions();
 
-      console.log('url', url);
-
       const popup = window.open(
         url,
         'google_oauth',
-        'width=700,height=700,left=' + (screen.width / 2 - 350) + ',top=100',
+        'width=700,height=700,left=' +
+          (screen.width / 2 - 350) +
+          ',top=100,scrollbars=yes',
       );
 
-      if (!popup) alert('Разрешите всплывающие окна');
+      if (!popup) {
+        return;
+      }
 
-      // После закрытия попапа — обновляем страницу
-      const timer = setInterval(() => {
-        if (popup?.closed) {
-          clearInterval(timer);
-          globalThis.location.reload();
+      const checkClosed = setInterval(() => {
+        if (popup.closed) {
+          clearInterval(checkClosed);
+          router.refresh();
         }
-      }, 800);
+      }, 500);
     });
   };
 
@@ -41,10 +44,14 @@ export default function OnboardingTrigger() {
         type='button'
         onClick={handleAttach}
         disabled={isPending}
-        className='cursor-pointer'
+        className='cursor-pointer focus:outline-none'
       >
         <OnboardingImage />
-        {isPending && <div className='text-sm mt-2'>Открываем Google...</div>}
+        {isPending && (
+          <p className='text-sm mt-4 text-muted-foreground'>
+            Открываем Google...
+          </p>
+        )}
       </button>
     </div>
   );
