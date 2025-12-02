@@ -1,19 +1,16 @@
 'use client';
 
-import type { PropsWithChildren } from 'react';
 import clsx from 'clsx';
-import { useElementSize } from '@/shared/hooks/useElementSize';
+
+import type { PropsWithChildren } from 'react';
 
 interface Props extends PropsWithChildren {
   className?: string;
 }
 
-export default function Card({ children, className }: Props) {
-  const ref = useElementSize('cardContent');
-
+export default function Card({ children, className = '' }: Props) {
   return (
     <div
-      ref={ref}
       className={clsx('rounded-[40px] bg-white box-shadow-primary', className)}
     >
       {children}

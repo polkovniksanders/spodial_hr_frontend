@@ -19,5 +19,5 @@ export async function POST(request: Request) {
 
   console.log('data', response);
 
-  return NextResponse.json({ ...response });
+  return NextResponse.redirect(new URL('/calendar?attached=1', request.url));
 }

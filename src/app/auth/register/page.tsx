@@ -1,6 +1,6 @@
 import Card from '@/components/ui/card/Card';
-import AuthTitle from '@/features/auth/ui/AuthTitle';
-import RegisterForm from '@/features/auth/ui/RegisterForm';
+import AuthTitle from '@/features/auth/ui/auth-title';
+import RegisterForm from '@/features/auth/ui/register-form';
 import { AUTH_TITLE_VARIANT } from '@/features/auth/utils/options';
 
 export default function Page() {

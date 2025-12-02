@@ -5,15 +5,17 @@ interface Props {
   className?: string;
 }
 
-export function H2({ children, className }: Props) {
+export function H2({ children, className = '' }: Props) {
   return (
-    <h1
-      style={{
-        lineHeight: 'normal',
-      }}
-      className={`text-[36px] font-normal text-[#344137] font-inter ${className}`}
-    >
-      {children}
-    </h1>
+    <div className={'max-w-full overflow-hidden'}>
+      <h2
+        style={{
+          lineHeight: 'normal',
+        }}
+        className={`text-[36px] font-normal text-[#344137] font-inter truncate min-w-0 ${className}`}
+      >
+        {children}
+      </h2>
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-// shared/hooks/usePopup.ts
 'use client';
 
 import { type ReactNode } from 'react';

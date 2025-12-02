@@ -1,6 +1,7 @@
 'use client';
 
 import React, { forwardRef, useId, useState, useEffect } from 'react';
+
 import Error from '@/components/ui/input/Error';
 
 export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -13,7 +14,6 @@ export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
 }
 
-/** tiny classNames helper to avoid dependency */
 const cn = (...parts: Array<string | false | null | undefined>) =>
   parts.filter(Boolean).join(' ');
 

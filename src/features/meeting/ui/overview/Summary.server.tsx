@@ -1,20 +1,22 @@
-import EventSummary from '@/features/event/ui/EventSummary';
-import { getSummary } from '@/features/meeting/service/get-summary';
-import GuestServer from '@/features/meeting/ui/overview/Guest.server';
-import ParticipantServer from '@/features/meeting/ui/overview/Participant.server';
+import EventSummary from '@/features/event/ui/event-summary';
+import AttendeesServer from '@/features/participants/ui/attendees.server';
+import GuestServer from '@/features/participants/ui/guest.server';
 
-export default async function SummaryServer({ id }: { id: string }) {
-  const summary = await getSummary(id);
-  if (!summary) return null;
-  const data = summary.data;
+import type { EventProps } from '@/features/event/service/event.interface';
 
+export default async function SummaryServer({
+  id,
+  data,
+}: {
+  id: string;
+  data: EventProps;
+}) {
   return (
     <div className='flex flex-col gap-7'>
       <EventSummary data={data} />
-
       <div className={'flex flex-row gap-[64px]'}>
         <GuestServer id={id} />
-        <ParticipantServer id={id} />
+        <AttendeesServer id={id} />
       </div>
     </div>
   );
