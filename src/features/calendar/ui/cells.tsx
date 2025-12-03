@@ -7,9 +7,10 @@ import {
   startOfMonth,
   startOfWeek,
 } from 'date-fns';
-import { type JSX, useMemo } from 'react';
+import { Fragment, type JSX, useMemo } from 'react';
 
 import CalendarDay from '@/features/calendar/ui/calendar-day';
+import CalendarExtraEvent from '@/features/calendar/ui/calendar-extra-event';
 import CalendarEvent from '@/features/calendar/ui/CalendarEvent';
 
 import type { EventProps } from '@/features/event/service/event.interface';
@@ -73,14 +74,15 @@ export default function Cells({
           <CalendarDay currentDay={day} />
           <div className='flex-1 overflow-y-auto scrollbar-hide space-y-1'>
             {dayEvents.slice(0, 3).map(event => (
-              <div key={event.id}>
+              <Fragment key={event.id}>
                 <CalendarEvent event={event} />
-              </div>
+              </Fragment>
             ))}
             {dayEvents.length > 3 && (
-              <div className='text-xs text-gray-500 text-center py-1'>
-                +{dayEvents.length - 3} more
-              </div>
+              <CalendarExtraEvent
+                dayEvents={dayEvents}
+                count={dayEvents.length - 3}
+              />
             )}
           </div>
         </div>,

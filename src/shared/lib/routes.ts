@@ -6,5 +6,6 @@ export const ROUTES = {
   DASHBOARD: {
     HOME: 'dashboard',
     CALENDAR: '/dashboard/calendar',
+    MEETING: '/dashboard/meeting',
   },
 } as const;
