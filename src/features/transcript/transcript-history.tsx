@@ -3,9 +3,11 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { loadTranscriptChunk } from '@/app/actions/transcript-actions';
-import TranscriptData from '@/features/transcript/transcript-data';
+import SpinLoader from '@/components/ui/layout/spin-loader';
+import { filters } from '@/features/transcript/lib/options';
+import TranscriptList from '@/features/transcript/transcript-list';
 
-import type { TranscriptsProps } from '@/features/meeting/service/meeting.interface';
+import type { TranscriptsProps } from '@/features/transcript/service/transcript.interface';
 
 type Props = {
   eventId: string;
@@ -13,12 +15,11 @@ type Props = {
   initialTotal: number;
 };
 
-export default function TranscriptClient({
+export default function TranscriptHistory({
   eventId,
   initialData,
   initialTotal,
 }: Props) {
-  // Храним только массив элементов
   const [items, setItems] = useState(initialData.data);
   const [offset, setOffset] = useState(initialData.data.length);
   const [hasMore, setHasMore] = useState(
@@ -35,11 +36,11 @@ export default function TranscriptClient({
       const { data, hasMore: more } = await loadTranscriptChunk(
         eventId,
         offset,
-        50,
+        filters.limit,
       );
 
-      setItems(prev => [...prev, ...data]); // теперь prev — это массив
-      setOffset(prev => prev + data.length);
+      setItems(prev => [...prev, ...data.data]);
+      setOffset(prev => prev + data.data.length);
       setHasMore(more);
     } catch (error) {
       console.error('Failed to load more', error);
@@ -54,10 +55,10 @@ export default function TranscriptClient({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && hasMore && !isLoading) {
-          loadMore();
+          void loadMore();
         }
       },
-      { rootMargin: '200px' },
+      { rootMargin: '20px' },
     );
 
     observer.observe(sentinelRef.current);
@@ -66,16 +67,17 @@ export default function TranscriptClient({
 
   return (
     <div className='space-y-4'>
-      <TranscriptData data={items} />
+      <TranscriptList data={items} />
 
-      <div ref={sentinelRef} className='h-10' />
-
-      {isLoading && <div className='text-center py-4'>Загрузка...</div>}
-      {!hasMore && items.length > 0 && (
-        <div className='text-center py-4 text-gray-500'>
-          Loaded: {items.length} items
+      {!hasMore && items.length > 0 ? (
+        <div className='text-center text-gray-500'>
+          Loaded: {items.length} (all) items
         </div>
+      ) : (
+        <div ref={sentinelRef} className='h-10' />
       )}
+
+      {isLoading && <SpinLoader />}
     </div>
   );
 }

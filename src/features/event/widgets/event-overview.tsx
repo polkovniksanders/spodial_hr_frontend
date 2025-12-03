@@ -3,7 +3,7 @@ import ParticipantsWrapper from '@/features/participants/ui/participants-wrapper
 
 import type { EventProps } from '@/features/event/service/event.interface';
 
-export default async function SummaryServer({
+export default function EventOverview({
   id,
   data,
 }: {
