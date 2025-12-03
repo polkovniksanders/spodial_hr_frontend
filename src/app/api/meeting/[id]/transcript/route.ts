@@ -15,11 +15,6 @@ export async function GET(
     return NextResponse.json({ error: 'Bad Request' }, { status: 400 });
   }
 
-  console.log(request);
-
-  console.log('token', token);
-  console.log('authHeader', authHeader);
-
   if (!token) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }

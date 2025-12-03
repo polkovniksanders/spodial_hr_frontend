@@ -11,14 +11,14 @@ import ParticipantsTitle from '@/features/participants/ui/participants-title';
 
 import Matching from './matching';
 
-type Props = {
-  id: string;
-};
-
-export default async function ParticipantsWrapper({ id }: Props) {
+export default async function ParticipantsWrapper({
+  eventId,
+}: {
+  eventId: number;
+}) {
   const [attendeesRes, guestsRes] = await Promise.all([
-    getAttendees(id),
-    getGuests(id),
+    getAttendees(eventId),
+    getGuests(eventId),
   ]);
 
   if (!attendeesRes || !guestsRes) {
@@ -43,7 +43,7 @@ export default async function ParticipantsWrapper({ id }: Props) {
       <div>
         <ParticipantsTitle>Match guests</ParticipantsTitle>
 
-        <Matching items={attendees} />
+        <Matching eventId={eventId} guests={guests} attendees={attendees} />
       </div>
     </div>
   );

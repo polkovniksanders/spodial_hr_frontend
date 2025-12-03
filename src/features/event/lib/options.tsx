@@ -4,8 +4,6 @@ import { Clock4, Dot, TextAlignJustify, Timer, Video } from 'lucide-react';
 import type { EventProps } from '@/features/event/service/event.interface';
 
 function formatDate(dateString: string) {
-  console.log('dateString', dateString);
-
   const date = new Date(dateString.replace(' ', 'T'));
   return new Intl.DateTimeFormat('en-US', {
     weekday: 'long',

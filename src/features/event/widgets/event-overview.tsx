@@ -13,7 +13,7 @@ export default function EventOverview({
   return (
     <div className='flex flex-col gap-7'>
       <EventSummary data={data} />
-      <ParticipantsWrapper id={id} />
+      <ParticipantsWrapper eventId={Number(id)} />
     </div>
   );
 }
