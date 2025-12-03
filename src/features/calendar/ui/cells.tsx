@@ -10,8 +10,8 @@ import {
 import { Fragment, type JSX, useMemo } from 'react';
 
 import CalendarDay from '@/features/calendar/ui/calendar-day';
+import CalendarEvent from '@/features/calendar/ui/calendar-event';
 import CalendarExtraEvent from '@/features/calendar/ui/calendar-extra-event';
-import CalendarEvent from '@/features/calendar/ui/CalendarEvent';
 
 import type { EventProps } from '@/features/event/service/event.interface';
 

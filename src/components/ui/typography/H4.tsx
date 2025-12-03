@@ -7,13 +7,15 @@ interface Props {
 
 export function H4({ children, className }: Props) {
   return (
-    <h4
-      style={{
-        lineHeight: 'normal',
-      }}
-      className={`text-[28px] font-normal text-[#344137] font-inter ${className}`}
-    >
-      {children}
-    </h4>
+    <div className={'max-w-full overflow-hidden'}>
+      <h4
+        style={{
+          lineHeight: 'normal',
+        }}
+        className={`text-[28px] font-normal text-[#344137] font-inter  ${className}`}
+      >
+        {children}
+      </h4>
+    </div>
   );
 }

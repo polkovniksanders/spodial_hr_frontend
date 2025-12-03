@@ -13,7 +13,6 @@ export default async function SummaryServer({
   return (
     <div className='flex flex-col gap-7'>
       <EventSummary data={data} />
-
       <ParticipantsWrapper id={id} />
     </div>
   );

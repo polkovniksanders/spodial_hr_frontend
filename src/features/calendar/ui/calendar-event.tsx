@@ -33,7 +33,7 @@ const CalendarEvent = ({ event }: { event: EventProps }) => {
 
       open(anchorRef.current, {
         width: 600,
-        preferredPosition: 'top',
+        preferredPosition: 'right',
         content: <EventPopup close={close} event={event} />,
       });
     }
@@ -46,17 +46,17 @@ const CalendarEvent = ({ event }: { event: EventProps }) => {
         handleClick(e);
         e.stopPropagation();
       }}
-      className='flex flex-row gap-2 truncate rounded-full px-[10px] py-[6px] bg-primary text-white transition-colors cursor-pointer'
+      className='flex flex-row items-center gap-2 rounded-full px-[10px] py-[6px] bg-primary text-white transition-colors cursor-pointer select-none'
     >
-      {isPast ? <CircleCheckBig size={14} /> : <Circle size={14} />}
-      {isPast && (
-        <div>
-          <p className='text-xs line-through'>{formatDate(event.ends_at)}</p>
-        </div>
-      )}
-      <p className='text-xs truncate overflow-hidden text-ellipsis whitespace-nowrap'>
-        {title}
-      </p>
+      <div className='flex flex-row items-center gap-2 flex-shrink-0'>
+        {isPast ? <CircleCheckBig size={14} /> : <Circle size={14} />}
+        {isPast && (
+          <p className='text-xs line-through whitespace-nowrap'>
+            {formatDate(event.ends_at)}
+          </p>
+        )}
+      </div>
+      <p className='text-xs truncate min-w-0'>{title}</p>
     </div>
   );
 };
