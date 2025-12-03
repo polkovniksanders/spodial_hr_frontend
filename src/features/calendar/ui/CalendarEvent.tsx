@@ -8,6 +8,7 @@ import { EventPopup } from '@/features/event/ui/event-popup';
 import { usePopup } from '@/shared/hooks/usePopup';
 import { formatDate } from '@/shared/lib/dateFormatter';
 import { isEventPast } from '@/shared/lib/isEventPast';
+import { ROUTES } from '@/shared/lib/routes';
 
 import type { EventProps } from '@/features/event/service/event.interface';
 
@@ -24,7 +25,7 @@ const CalendarEvent = ({ event }: { event: EventProps }) => {
     e.stopPropagation();
 
     if (isPast) {
-      router.push(`/dashboard/meeting/${id}?tab=summary`);
+      router.push(`${ROUTES.DASHBOARD.MEETING}/${id}?tab=summary`);
     } else {
       if (!anchorRef.current) {
         return;

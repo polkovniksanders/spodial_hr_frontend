@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { loadTranscriptChunk } from '@/app/dashboard/meeting/[id]/transcript-actions';
+import { loadTranscriptChunk } from '@/app/actions/transcript-actions';
 import SpinLoader from '@/components/ui/layout/spin-loader';
 import TranscriptClient from '@/features/transcript/transcript.client';
 

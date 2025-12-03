@@ -1,3 +1,4 @@
+import { available_tabs } from '@/features/meeting/lib/options';
 import { TabLink } from '@/features/meeting/TabLink';
 
 interface Props {
@@ -6,16 +7,16 @@ interface Props {
 
 const items = [
   {
-    title: 'summary',
-    link: 'summary',
+    title: 'Overview',
+    link: available_tabs.summary,
   },
   {
-    title: 'followup',
-    link: 'followup',
+    title: 'Follow-up',
+    link: available_tabs.followup,
   },
   {
-    title: 'transcript',
-    link: 'transcript',
+    title: 'Transcript',
+    link: available_tabs.transcript,
   },
 ];
 

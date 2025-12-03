@@ -24,7 +24,7 @@ export const EventPopup = ({
   };
 
   return (
-    <div className='bg-white rounded-3xl shadow-2xl border border-gray-200 min-w-80'>
+    <div className='bg-white rounded-3xl shadow-2xl border border-gray-200'>
       <div className='flex flex-row justify-between items-center px-[38px] pt-[26px] pb-[18px] border-b-border-primary'>
         <H4>{event.title}</H4>
 

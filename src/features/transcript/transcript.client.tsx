@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import { loadTranscriptChunk } from '@/app/dashboard/meeting/[id]/transcript-actions';
+import { loadTranscriptChunk } from '@/app/actions/transcript-actions';
 import TranscriptData from '@/features/transcript/transcript-data';
 
 import type { TranscriptsProps } from '@/features/meeting/service/meeting.interface';
