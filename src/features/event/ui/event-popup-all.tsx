@@ -2,7 +2,7 @@ import React from 'react';
 
 import ButtonClose from '@/components/ui/button/ButtonClose';
 import { H4 } from '@/components/ui/typography/H4';
-import CalendarEvent from '@/features/calendar/ui/CalendarEvent';
+import CalendarEvent from '@/features/calendar/ui/calendar-event';
 import { getWeekdayAndDay } from '@/features/event/lib/get-weekday-and-day';
 
 import type { EventProps } from '@/features/event/service/event.interface';

@@ -4,11 +4,11 @@ import { Suspense } from 'react';
 import ButtonsRow from '@/components/ui/button/ButtonsRow';
 import Card from '@/components/ui/card/Card';
 import SpinLoader from '@/components/ui/layout/spin-loader';
+import EventOverview from '@/features/event/widgets/event-overview';
 import { available_tabs } from '@/features/meeting/lib/options';
 import { getSummary } from '@/features/meeting/service/get-summary';
 import FollowUp from '@/features/meeting/ui/follow-up/follow-up';
 import MeetingHeader from '@/features/meeting/ui/MeetingHeader';
-import SummaryServer from '@/features/meeting/ui/overview/Summary.server';
 import TranscriptWrapper from '@/features/transcript/transcript-wrapper';
 import { ROUTES } from '@/shared/lib/routes';
 
@@ -43,7 +43,7 @@ export default async function Page({ params, searchParams }: Props) {
       <div className='mt-8 px-10 pb-10'>
         <Suspense fallback={<SpinLoader />} key={currentTab}>
           {currentTab === available_tabs.summary && (
-            <SummaryServer id={id} data={data} />
+            <EventOverview id={id} data={data} />
           )}
           {currentTab === available_tabs.followup && <FollowUp />}
           {currentTab === available_tabs.transcript && (

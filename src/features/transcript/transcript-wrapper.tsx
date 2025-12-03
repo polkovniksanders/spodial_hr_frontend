@@ -1,26 +1,26 @@
-import { Suspense } from 'react';
-
 import { loadTranscriptChunk } from '@/app/actions/transcript-actions';
-import SpinLoader from '@/components/ui/layout/spin-loader';
-import TranscriptClient from '@/features/transcript/transcript.client';
+import { filters } from '@/features/transcript/lib/options';
+import TranscriptHistory from '@/features/transcript/transcript-history';
 
-async function TranscriptInitialServer({ id }: { id: string }) {
-  const { data, totalCount } = await loadTranscriptChunk(id, 0, 50);
+async function getInitial({ id }: { id: string }) {
+  const { data, totalCount } = await loadTranscriptChunk(
+    id,
+    0,
+    filters.limit * 2,
+  );
   return { initialData: data, initialTotal: totalCount };
 }
 
 export default async function TranscriptWrapper({ id }: { id: string }) {
-  const { initialData, initialTotal } = await TranscriptInitialServer({
+  const { initialData, initialTotal } = await getInitial({
     id: id,
   });
 
   return (
-    <Suspense fallback={<SpinLoader />}>
-      <TranscriptClient
-        eventId={id}
-        initialData={initialData}
-        initialTotal={initialTotal}
-      />
-    </Suspense>
+    <TranscriptHistory
+      eventId={id}
+      initialData={initialData}
+      initialTotal={initialTotal}
+    />
   );
 }

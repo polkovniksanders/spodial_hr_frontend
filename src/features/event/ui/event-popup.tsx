@@ -1,4 +1,5 @@
-import React from 'react';
+import { Minus, Plus } from 'lucide-react';
+import React, { type JSX, useState } from 'react';
 
 import { switchBot } from '@/app/actions/bot-actions';
 import { Button } from '@/components/ui/button/Button';
@@ -10,24 +11,37 @@ import ParticipantsTitle from '@/features/participants/ui/participants-title';
 
 import type { EventProps } from '@/features/event/service/event.interface';
 
-export const EventPopup = ({
+export function EventPopup({
   event,
   close,
 }: {
   event: EventProps;
   close: () => void;
-}) => {
-  const addBot = async () => {
+}): JSX.Element {
+  const [isSwitching, setIsSwitching] = useState(false);
+
+  const isBotAdded = event.required_bot;
+  const Icon = isBotAdded ? Minus : Plus;
+  const actionText = isBotAdded ? 'remove bot' : 'add bot';
+
+  const handleSwitchBot = async () => {
+    if (isSwitching) return;
+
+    setIsSwitching(true);
     try {
-      await switchBot(event.id).then(() => close?.());
-    } catch {}
+      await switchBot(event.id, !event.required_bot);
+      close();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSwitching(false);
+    }
   };
 
   return (
     <div className='bg-white rounded-3xl shadow-2xl border border-gray-200'>
       <div className='flex flex-row justify-between items-center px-[38px] pt-[26px] pb-[18px] border-b-border-primary'>
         <H4>{event.title}</H4>
-
         <ButtonClose close={close} />
       </div>
 
@@ -45,9 +59,19 @@ export const EventPopup = ({
         </div>
       </div>
 
-      <div className={'w-full justify-end flex pb-[18px] px-[38px]'}>
-        <Button onClick={addBot}>+ add bot</Button>
+      <div className='flex justify-end px-8 pb-6'>
+        <Button
+          onClick={handleSwitchBot}
+          disabled={isSwitching}
+          loading={isSwitching}
+          aria-label={isBotAdded ? 'remove bot' : 'add bot'}
+        >
+          <div className='flex items-center gap-3'>
+            <Icon size={24} aria-hidden='true' />
+            <span>{actionText}</span>
+          </div>
+        </Button>
       </div>
     </div>
   );
-};
+}

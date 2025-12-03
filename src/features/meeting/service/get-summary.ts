@@ -15,7 +15,7 @@ export async function getSummary(id: string) {
 
   if (!res.ok) {
     const text = await res.text();
-    console.error('Transcript fetch failed:', res.status, text);
+    console.error('Summary fetch failed:', res.status, text);
     return null;
   }
 

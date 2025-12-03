@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 export async function loadTranscriptChunk(
   id: string,
   offset: number,
-  limit = 5000,
+  limit: number,
 ) {
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;

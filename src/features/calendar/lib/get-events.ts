@@ -15,7 +15,7 @@ export async function getEvents() {
 
   if (!res.ok) {
     const text = await res.text();
-    console.error('Transcript fetch failed:', res.status, text);
+    console.error('Events fetch failed:', res.status, text);
     return null;
   }
 

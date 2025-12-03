@@ -1,17 +1,94 @@
-import Input from '@/components/ui/input/Input';
+'use client';
 
-import type { AttendeeProps } from '@/features/participants/service/participant.interface';
+import { ArrowRight, Loader2 } from 'lucide-react';
+import { useOptimistic, useTransition } from 'react';
 
-export default function Matching({ items }: { items: AttendeeProps[] }) {
-  console.log('items', items);
+import InputDropdown from '@/components/ui/input/InputDropdown';
+import { setProfile } from '@/features/participants/lib/participants-actions';
+
+import type {
+  GuestProps,
+  AttendeeProps,
+} from '@/features/participants/service/participant.interface';
+
+export default function Matching({
+  eventId,
+  guests,
+  attendees,
+}: {
+  eventId: number;
+  guests: GuestProps[];
+  attendees: AttendeeProps[];
+}) {
+  const initialMatching = attendees.reduce<Record<number, string>>(
+    (acc, attendee) => {
+      if (attendee.profile?.id) {
+        acc[attendee.id] = String(attendee.profile.id);
+      }
+      return acc;
+    },
+    {},
+  );
+
+  const [optimisticMatching, updateOptimistic] = useOptimistic(
+    initialMatching,
+    (
+      state,
+      { attendeeId, guestId }: { attendeeId: number; guestId: string | null },
+    ) => ({
+      ...state,
+      [attendeeId]: guestId ?? '',
+    }),
+  );
+
+  const [isPending, startTransition] = useTransition();
+
+  const guestOptions = guests.map(guest => ({
+    label: guest.email,
+    value: String(guest.id),
+  }));
+
+  const handleSelect = (attendeeId: number, guestId: string) => {
+    startTransition(() => {
+      updateOptimistic({ attendeeId, guestId });
+
+      setProfile(eventId, attendeeId, guestId).catch(error => {
+        console.error('Ошибка сохранения:', error);
+      });
+    });
+  };
 
   return (
-    <div>
-      {items.map(item => (
-        <div key={item.id}>
-          <Input value={item.name} />
-        </div>
-      ))}
+    <div className='flex flex-col gap-2'>
+      {attendees.map(attendee => {
+        const currentValue = optimisticMatching[attendee.id] || '';
+
+        return (
+          <div key={attendee.id} className='flex items-center gap-3 relative'>
+            <div className='text-gray-400'>
+              <ArrowRight className='w-5 h-5' />
+            </div>
+
+            <div className='flex-1 relative'>
+              <InputDropdown
+                label=''
+                options={guestOptions}
+                value={currentValue}
+                onChange={value => handleSelect(attendee.id, value.toString())}
+                placeholder='Select invited'
+                searchable
+                disabled={isPending}
+              />
+
+              {isPending && (
+                <div className='absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none'>
+                  <Loader2 className='w-4 h-4 animate-spin text-primary' />
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

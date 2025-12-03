@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+
 import type { RegisterResponse } from '@/features/auth/service/auth.interface';
 
 export async function POST(req: Request) {
@@ -32,8 +33,6 @@ export async function POST(req: Request) {
     // 3. Если всё хорошо, создаем успешный ответ
     const res = NextResponse.json({ success: true, user: data });
 
-    console.log('data', data);
-
     // 4. Устанавливаем токен в куки
     // Проверяем, что токен действительно пришел
     if (data.token) {
@@ -47,8 +46,8 @@ export async function POST(req: Request) {
     }
 
     return res;
-  } catch (err) {
-    console.error('Proxy Route Error:', err);
+  } catch (error) {
+    console.error('Proxy Route Error:', error);
     return new NextResponse('Internal Server Error', { status: 500 });
   }
 }
