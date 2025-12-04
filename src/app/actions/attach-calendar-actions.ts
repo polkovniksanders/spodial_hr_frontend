@@ -1,16 +1,14 @@
 'use server';
 
-import { cookies } from 'next/headers';
+import { getAuthHeaders } from '@/shared/lib/getAuthToken';
 
 export async function attachCalendarActions() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
+  const authHeaders = await getAuthHeaders();
 
   const res = await fetch(process.env.API_URL + '/google/oauth', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...authHeaders,
     },
     credentials: 'include',
     cache: 'no-store',

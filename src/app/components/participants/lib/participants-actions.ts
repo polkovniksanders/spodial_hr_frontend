@@ -3,17 +3,17 @@
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
+import { getAuthHeaders } from '@/shared/lib/getAuthToken';
+
 export async function getAttendees(id: number) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
+  const authHeaders = await getAuthHeaders();
 
   const res = await fetch(
     `${process.env.API_URL}/calendar-events/${id}/participants`,
     {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...authHeaders,
       },
       next: { revalidate: 60 },
     },
@@ -29,16 +29,14 @@ export async function getAttendees(id: number) {
 }
 
 export async function getGuests(id: number) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
+  const authHeaders = await getAuthHeaders();
 
   const res = await fetch(
     `${process.env.API_URL}/calendar-events/${id}/profiles`,
     {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...authHeaders,
       },
       next: { revalidate: 60 },
     },
@@ -58,14 +56,7 @@ export async function setProfile(
   participantId: number,
   guestId: string | null,
 ) {
-  'use server';
-
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
-
-  if (!token) {
-    throw new Error('Unauthorized');
-  }
+  const authHeaders = await getAuthHeaders();
 
   const payload: any = {
     calendar_event_id: eventId,
@@ -78,8 +69,7 @@ export async function setProfile(
     {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...authHeaders,
       },
       body: JSON.stringify(payload),
       cache: 'no-store',

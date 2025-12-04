@@ -18,6 +18,10 @@ const items = [
     title: 'Transcript',
     link: available_tabs.transcript,
   },
+  {
+    title: 'Analysis',
+    link: available_tabs.analysis,
+  },
 ];
 
 export default function ButtonsRow({ currentTab }: Props) {

@@ -1,11 +1,11 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
+
+import { getAuthHeaders } from '@/shared/lib/getAuthToken';
 
 export async function switchBot(eventId: number, botRequired: boolean) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
+  const authHeaders = await getAuthHeaders();
 
   const payload = {
     calendar_event_id: eventId,
@@ -18,8 +18,7 @@ export async function switchBot(eventId: number, botRequired: boolean) {
       method: 'POST',
       cache: 'no-store',
       headers: {
-        'Content-Type': 'application/json',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...authHeaders,
       },
       body: JSON.stringify(payload),
     },

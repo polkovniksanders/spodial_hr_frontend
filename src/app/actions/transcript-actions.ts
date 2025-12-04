@@ -1,22 +1,20 @@
 'use server';
 
-import { cookies } from 'next/headers';
+import { getAuthHeaders } from '@/shared/lib/getAuthToken';
 
 export async function loadTranscriptChunk(
   id: string,
   offset: number,
   limit: number,
 ) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
+  const authHeaders = await getAuthHeaders();
 
   const res = await fetch(
     `${process.env.API_URL}/calendar-events/${id}/transcript?offset=${offset}&limit=${limit}`,
     {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...authHeaders,
       },
     },
   );

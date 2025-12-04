@@ -1,7 +1,6 @@
-// src/app/api/calendar/callback/route.ts  ← сюда Google вернёт после авторизации
-
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+
+import { getAuthHeaders } from '@/shared/lib/getAuthToken';
 
 const CALLBACK_URL = '/dashboard/calendar';
 
@@ -9,6 +8,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
   const state = searchParams.get('state');
+  const authHeaders = await getAuthHeaders();
 
   if (!code) {
     return NextResponse.redirect(
@@ -16,15 +16,10 @@ export async function GET(request: Request) {
     );
   }
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
-
-  // Обмениваем code на токены у твоего бэкенда
   const res = await fetch(`${process.env.API_URL}/google/oauth`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: token ? `Bearer ${token}` : '',
+      ...authHeaders,
     },
     body: JSON.stringify({ code, state }),
   });
@@ -35,7 +30,6 @@ export async function GET(request: Request) {
     );
   }
 
-  // Успешно сохранили токены календаря
   const redirectUrl = new URL(CALLBACK_URL, request.url);
   redirectUrl.searchParams.set('attached', '1');
 

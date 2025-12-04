@@ -1,13 +1,12 @@
-import { cookies } from 'next/headers';
+import { getAuthHeaders } from '@/shared/lib/getAuthToken';
 
 export async function getSources() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
-
-  if (!token) return null;
+  const authHeaders = await getAuthHeaders();
 
   const res = await fetch(`${process.env.API_URL}/sources`, {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      ...authHeaders,
+    },
     cache: 'no-store',
   });
 

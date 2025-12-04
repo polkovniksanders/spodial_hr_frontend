@@ -1,18 +1,16 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+
+import { getAuthHeaders } from '@/shared/lib/getAuthToken';
 
 export async function POST() {
   const res = new NextResponse(null, { status: 200 });
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
+  const authHeaders = await getAuthHeaders();
 
   try {
     const backendRes = await fetch(process.env.API_URL + '/auth/logout', {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: token ? `Bearer ${token}` : '',
+        ...authHeaders,
       },
     });
 
@@ -32,7 +30,7 @@ export async function POST() {
     });
 
     return res;
-  } catch (err) {
+  } catch {
     res.cookies.set('token', '', { maxAge: 0, path: '/' });
 
     return res;
