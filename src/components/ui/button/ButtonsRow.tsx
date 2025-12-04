@@ -1,5 +1,5 @@
-import { available_tabs } from '@/features/meeting/lib/options';
-import { TabLink } from '@/features/meeting/TabLink';
+import { available_tabs } from '@/app/components/meeting/lib/options';
+import { TabLink } from '@/app/components/meeting/ui/TabLink';
 
 interface Props {
   currentTab: string | undefined;

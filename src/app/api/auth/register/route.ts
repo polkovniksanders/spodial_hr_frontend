@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import type { RegisterResponse } from '@/features/auth/service/auth.interface';
+import type { RegisterResponse } from '@/app/components/auth/service/auth.interface';
 
 export async function POST(req: Request) {
   try {
