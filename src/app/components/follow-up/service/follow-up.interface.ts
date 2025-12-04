@@ -1,3 +1,19 @@
-export interface FollowUpProps {
-  data: string;
+import type { GuestCore } from '@/app/components/participants/service/participant.interface';
+
+export interface FollowUpResponse {
+  data: FollowUpDetailProps;
+}
+
+export interface FollowUpsResponse {
+  data: FollowUpDetailProps[];
+}
+
+export interface FollowUpDetailProps {
+  calendar_event_id: number;
+  id: number;
+  participant_id: null | GuestCore;
+  score: string;
+  status: string;
+  type: string;
+  text: string;
 }

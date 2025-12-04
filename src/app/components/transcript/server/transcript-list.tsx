@@ -10,10 +10,10 @@ export default function TranscriptList({ data }: { data: TranscriptProps[] }) {
       {data.map(item => (
         <div key={item.id}>
           <div className={'flex flex-row gap-2 items-center'}>
-            <p className={'text-sm font-normal leading-normal'}>
+            <p className={'text-sm font-normal leading-normal text-secondary'}>
               {formatChatTime(Number(item.start_relative))}
             </p>
-            <p className={'text-sm font-normal leading-normal text-primary'}>
+            <p className={'text-sm font-normal leading-normal text-accent'}>
               {item.participant.name}
             </p>
           </div>

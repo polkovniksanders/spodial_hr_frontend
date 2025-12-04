@@ -2,8 +2,8 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { type PropsWithChildren, Suspense } from 'react';
 
-import CalendarServer from '@/app/components/calendar/ui/calendar.server';
-import OnboardingTrigger from '@/app/components/calendar/ui/onboarding/onboarding-trigger';
+import OnboardingTrigger from '@/app/components/calendar/client/onboarding-trigger';
+import CalendarData from '@/app/components/calendar/server/calendar-data';
 import Card from '@/components/ui/card/Card';
 import SpinLoader from '@/components/ui/layout/spin-loader';
 import { getSources } from '@/shared/lib/get-sources';
@@ -21,7 +21,7 @@ const UnattachedView = () => (
 const AttachedView = () => (
   <Wrapper>
     <Suspense fallback={<SpinLoader />}>
-      <CalendarServer />
+      <CalendarData />
     </Suspense>
   </Wrapper>
 );

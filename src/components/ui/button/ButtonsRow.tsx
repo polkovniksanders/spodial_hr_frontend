@@ -27,14 +27,14 @@ export default function ButtonsRow({ currentTab }: Props) {
     return (
       <TabLink key={index} tab={item.link}>
         <button
-          className={`border-[var(--color-border-primary)] border-1 cursor-pointer px-2.5 p-2 text-center text-sm  transition-all
+          className={`border-table border-1 cursor-pointer px-2.5 p-2 text-center text-sm  transition-all
   ${isActive ? 'bg-primary text-white' : ''}
   ${index === 0 ? 'rounded-l-full ' : ''}
   ${index === items.length - 1 ? 'rounded-r-full' : ''}
   ${index > 0 && index < items.length - 1 ? 'border-l border-r ' : ''}`}
           type='button'
         >
-          <p className={isActive ? 'text-white' : 'text-primary'}>
+          <p className={isActive ? 'text-white' : 'text-accent'}>
             {item.title}
           </p>
         </button>

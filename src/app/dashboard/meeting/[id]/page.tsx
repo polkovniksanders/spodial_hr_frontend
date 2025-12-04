@@ -1,9 +1,9 @@
 import { notFound, redirect } from 'next/navigation';
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 
 import { getSummary } from '@/app/components/event/lib/get-summary';
 import EventOverview from '@/app/components/event/server/event-overview';
-import FollowUp from '@/app/components/follow-up/ui/follow-up';
+import FollowUp from '@/app/components/follow-up/server/follow-up';
 import { available_tabs } from '@/app/components/meeting/lib/options';
 import MeetingHeader from '@/app/components/meeting/ui/MeetingHeader';
 import Transcript from '@/app/components/transcript/server/transcript';
@@ -45,7 +45,9 @@ export default async function Page({ params, searchParams }: Props) {
           {currentTab === available_tabs.summary && (
             <EventOverview id={id} data={data} />
           )}
-          {currentTab === available_tabs.followup && <FollowUp />}
+          {currentTab === available_tabs.followup && (
+            <FollowUp id={Number(id)} />
+          )}
           {currentTab === available_tabs.transcript && <Transcript id={id} />}
         </Suspense>
       </div>

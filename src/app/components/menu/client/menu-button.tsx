@@ -26,8 +26,8 @@ export default function MenuButton({ item }: { item: MenuProps }) {
       }
       className={clsx(
         'cursor-pointer flex w-full items-center gap-2 rounded-[12px] px-6 py-2 text-left transition-colors',
-        'hover:bg-hover',
-        isActive ? 'bg-white text-primary' : 'text-grey',
+        'hover:bg-hover-light',
+        isActive ? 'bg-white text-accent' : 'text-secondary',
       )}
       aria-current={isActive ? 'page' : undefined}
     >

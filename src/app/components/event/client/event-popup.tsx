@@ -6,7 +6,7 @@ import EventSummary from '@/app/components/event/server/event-summary';
 import { participants } from '@/app/components/participants/lib/options';
 import ParticipantsTitle from '@/app/components/participants/server/participants-title';
 import { Button } from '@/components/ui/button/Button';
-import ButtonClose from '@/components/ui/button/ButtonClose';
+import ButtonClose from '@/components/ui/button/button-close';
 import { H4 } from '@/components/ui/typography/H4';
 
 import type { EventProps } from '@/app/components/event/service/event.interface';
