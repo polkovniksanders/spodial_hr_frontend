@@ -1,15 +1,15 @@
 import { notFound, redirect } from 'next/navigation';
 import { Suspense } from 'react';
 
+import { getSummary } from '@/app/components/event/lib/get-summary';
+import EventOverview from '@/app/components/event/server/event-overview';
+import FollowUp from '@/app/components/follow-up/ui/follow-up';
+import { available_tabs } from '@/app/components/meeting/lib/options';
+import MeetingHeader from '@/app/components/meeting/ui/MeetingHeader';
+import Transcript from '@/app/components/transcript/server/transcript';
 import ButtonsRow from '@/components/ui/button/ButtonsRow';
 import Card from '@/components/ui/card/Card';
 import SpinLoader from '@/components/ui/layout/spin-loader';
-import EventOverview from '@/features/event/widgets/event-overview';
-import { available_tabs } from '@/features/meeting/lib/options';
-import { getSummary } from '@/features/meeting/service/get-summary';
-import FollowUp from '@/features/meeting/ui/follow-up/follow-up';
-import MeetingHeader from '@/features/meeting/ui/MeetingHeader';
-import TranscriptWrapper from '@/features/transcript/transcript-wrapper';
 import { ROUTES } from '@/shared/lib/routes';
 
 interface Props {
@@ -46,9 +46,7 @@ export default async function Page({ params, searchParams }: Props) {
             <EventOverview id={id} data={data} />
           )}
           {currentTab === available_tabs.followup && <FollowUp />}
-          {currentTab === available_tabs.transcript && (
-            <TranscriptWrapper id={id} />
-          )}
+          {currentTab === available_tabs.transcript && <Transcript id={id} />}
         </Suspense>
       </div>
     </Card>

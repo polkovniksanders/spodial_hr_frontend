@@ -1,7 +1,7 @@
+import RegisterForm from '@/app/components/auth/client/register-form';
+import { AUTH_TITLE_VARIANT } from '@/app/components/auth/lib/options';
+import AuthTitle from '@/app/components/auth/server/auth-title';
 import Card from '@/components/ui/card/Card';
-import AuthTitle from '@/features/auth/ui/auth-title';
-import RegisterForm from '@/features/auth/ui/register-form';
-import { AUTH_TITLE_VARIANT } from '@/features/auth/utils/options';
 
 export default function Page() {
   return (
