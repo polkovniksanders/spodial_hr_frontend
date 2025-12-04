@@ -1,6 +1,7 @@
 import { notFound, redirect } from 'next/navigation';
 import React, { Suspense } from 'react';
 
+import Analysis from '@/app/components/analysis/server/analysis';
 import { getSummary } from '@/app/components/event/lib/get-summary';
 import EventOverview from '@/app/components/event/server/event-overview';
 import FollowUp from '@/app/components/follow-up/server/follow-up';
@@ -26,7 +27,7 @@ export default async function Page({ params, searchParams }: Props) {
   if (!summary) return notFound();
   const { data } = summary;
 
-  const validTabs = ['summary', 'followup', 'transcript'] as const;
+  const validTabs = ['summary', 'followup', 'transcript', 'analysis'] as const;
   const currentTab = validTabs.includes(tab as any) ? tab : 'summary';
 
   if (tab !== currentTab)
@@ -49,6 +50,9 @@ export default async function Page({ params, searchParams }: Props) {
             <FollowUp id={Number(id)} />
           )}
           {currentTab === available_tabs.transcript && <Transcript id={id} />}
+          {currentTab === available_tabs.analysis && (
+            <Analysis id={Number(id)} />
+          )}
         </Suspense>
       </div>
     </Card>
