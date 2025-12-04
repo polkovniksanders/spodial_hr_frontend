@@ -1,10 +1,10 @@
+import Calendar from '@/app/components/calendar/client/calendar';
 import { getEvents } from '@/app/components/calendar/lib/get-events';
-import CalendarClient from '@/app/components/calendar/ui/calendar.client';
 
-export default async function CalendarServer() {
+export default async function CalendarData() {
   const eventsData = await getEvents();
   if (!eventsData) return null;
   const events = eventsData.data;
 
-  return <CalendarClient events={events} />;
+  return <Calendar events={events} />;
 }

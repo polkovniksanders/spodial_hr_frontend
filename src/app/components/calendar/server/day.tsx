@@ -1,6 +1,6 @@
 import { format, isToday } from 'date-fns';
 
-export default function CalendarDay({ currentDay }: { currentDay: Date }) {
+export default function Day({ currentDay }: { currentDay: Date }) {
   return (
     <div className='flex justify-center mb-1'>
       <div

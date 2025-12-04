@@ -1,90 +1,61 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-
-  --color-primary: #4FB268;
-  --color-secondary: #D3DED6;
-  --color-tertiary: #ACB5AF;
-  --color-main-gradient: linear-gradient(126deg, #F5FFF3 24.45%, #CCECD8 90.22%);
-
-
-  --color-hover: rgba(10, 66, 30, 0.04);
-  --color-grey: rgba(45, 86, 60, 0.58);
-
-  --color-border-primary: rgba(79, 178, 104, 0.25);
-
-  --color-text: #344137;
-  --color-text-secondary: #818F85;
-  --color-text-tertiary: #B8C2BB;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter-sans);
-  --font-mono: var(--font-inter-mono);
-
-  --color-primary: var(--color-primary);
-  --color-secondary: var(--color-secondary);
-  --color-tertiary: var(--color-tertiary);
-
-  --bg-main-gradient: var(--color-main-gradient);
-  --color-hover: rgba(10, 66, 30, 0.04);
-  --color-grey: rgba(45, 86, 60, 0.58);
-  --color-border-primary: rgba(79, 178, 104, 0.25);
-
-
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-primary: #4fb268;
+    --color-dark: #0a421e;
+    --color-white: #ffffff;
+
+    --bg-gradient-primary: linear-gradient(126deg, #f5fff3 24.45%, #ccecd8 90.22%);
+
+    --bg-primary: #4FB268;
+    --bg-layout: #f5fff7;
+    --bg-scheduled: #e0fad8;
+
+    --text-primary: #344137;
+    --text-secondary: #818f85;
+    --text-tertiary: #b8c2bb;
+    --text-placeholder: #acb5af;
+
+    --border-primary: #d3ded6;
+    --border-table: rgba(79, 178, 104, 0.25);
+
+    --bg-hover: rgba(10, 66, 30, 0.16);
+    --bg-hover-light: rgba(10, 66, 30, 0.04);
+    --bg-selected: rgba(79, 178, 104, 0.17);
+    --bg-completed: rgba(79, 178, 104, 0.70);
   }
 }
 
 @layer utilities {
+  /* Основные цвета */
+  .bg-primary { background-color: var(--bg-primary); }
+  .bg-layout { background-color: var(--bg-layout); }
+  .bg-scheduled { background-color: var(--bg-scheduled); }
+  .bg-gradient-primary { background: var(--bg-gradient-primary); }
 
-  .border-table {
-    border-width: 1px;
-    border-color: rgba(79, 178, 104, 0.25);
-  }
+  .text-accent { color: var(--color-primary); }
+  .text-primary { color: var(--text-primary); }
+  .text-secondary { color: var(--text-secondary); }
+  .text-tertiary { color: var(--text-tertiary); }
+  .text-placeholder { color: var(--text-placeholder); }
 
-  .bg-gradient-primary {
-    background: linear-gradient(126deg, #F5FFF3 24.45%, #CCECD8 90.22%);
-  }
-  .box-shadow-primary {
+  .border-table { border: 1px solid var(--border-table); }
+  .border-primary { border: 1px solid var(--color-primary); }
+  .border-layout { border: 1px solid var(--border-primary); }
+
+  .hover\:bg-hover-light:hover { background-color: var(--bg-hover-light); }
+  .hover\:bg-hover:hover { background-color: var(--bg-hover); }
+  .bg-selected { background-color: var(--bg-selected); }
+  .bg-completed { background-color: var(--bg-completed); }
+
+  /* Тени и эффекты из твоего дизайна */
+  .shadow-primary {
     box-shadow: 15px 13px 21.6px 0 rgba(10, 66, 30, 0.04);
-  }
-  .border-secondary {
-    border: 1px solid #D3DED6;
-  }
-  .border-primary {
-    border: 1px solid #4FB268;
-  }
-  .border-tertiary {
-    border: 1px solid rgba(79, 178, 104, 0.25);
-  }
-  .border-b-border-primary {
-    border-bottom: 1px solid rgba(79, 178, 104, 0.25);
-  }
-  .bg-primary {
-    background:  #4FB268;
-  }
-  .bg-secondary {
-    background: #F5FFF7;
-  }
-
-  .text-secondary {
-    color: #D3DED6;
-  }
-  .text-tertiary {
-    color: #ACB5AF;
   }
 }
 
+/* Шрифт */
 body {
-  font-family: Inter, sans-serif;
+  font-family: Inter, system-ui, sans-serif;
 }

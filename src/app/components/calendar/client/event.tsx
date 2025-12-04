@@ -12,7 +12,7 @@ import { ROUTES } from '@/shared/lib/routes';
 
 import type { EventProps } from '@/app/components/event/service/event.interface';
 
-const CalendarEvent = ({ event }: { event: EventProps }) => {
+const Event = ({ event }: { event: EventProps }) => {
   const { id, title } = event;
 
   const isPast = isEventPast(event.ends_at);
@@ -39,8 +39,6 @@ const CalendarEvent = ({ event }: { event: EventProps }) => {
     }
   };
 
-  console.log('event', event);
-
   return (
     <div
       ref={anchorRef}
@@ -63,6 +61,6 @@ const CalendarEvent = ({ event }: { event: EventProps }) => {
   );
 };
 
-CalendarEvent.displayName = 'CalendarEvent';
+Event.displayName = 'CalendarEvent';
 
-export default CalendarEvent;
+export default Event;

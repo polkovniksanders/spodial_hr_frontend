@@ -30,8 +30,8 @@ export default function UserInfo({ name, email }: UserProps) {
   return (
     <div className={'flex gap-[8px] items-center justify-end mb-4'}>
       <div ref={anchorRef} className={'flex flex-col text-right'}>
-        <p className={'text-primary'}>{name}</p>
-        <p className={'text-[#818F85]'}>{email}</p>
+        <p className={'text-accent'}>{name}</p>
+        <p className={'text-secondary'}>{email}</p>
       </div>
 
       <button onClick={handleOpen} className={'cursor-pointer'}>

@@ -9,8 +9,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--primary)',
-        hover: 'var(--hover)',
+        primary: 'var(--color-primary)',
+        dark: 'var(--color-dark)',
       },
     },
   },

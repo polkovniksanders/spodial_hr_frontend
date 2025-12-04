@@ -5,7 +5,7 @@ import { usePopup } from '@/shared/hooks/usePopup';
 
 import type { EventProps } from '@/app/components/event/service/event.interface';
 
-export default function CalendarExtraEvent({
+export default function EventExtraButton({
   count,
   dayEvents,
 }: {

@@ -4,7 +4,7 @@ export async function getEvents() {
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
 
-  const res = await fetch(`${process.env.API_URL}/calendar-events`, {
+  const res = await fetch(`${process.env.API_URL}/calendar-events?limit=50`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

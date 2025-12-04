@@ -9,9 +9,9 @@ import {
 } from 'date-fns';
 import { Fragment, type JSX, useMemo } from 'react';
 
-import CalendarEvent from '@/app/components/calendar/client/calendar-event';
-import CalendarDay from '@/app/components/calendar/ui/calendar-day';
-import CalendarExtraEvent from '@/app/components/calendar/ui/calendar-extra-event';
+import Event from '@/app/components/calendar/client/event';
+import EventExtraButton from '@/app/components/calendar/client/event-extra-button';
+import Day from '@/app/components/calendar/server/day';
 
 import type { EventProps } from '@/app/components/event/service/event.interface';
 
@@ -51,7 +51,6 @@ export default function Cells({
     return map;
   }, [events]);
 
-  // Генерируем все ячейки (42 максимум: 6 × 7)
   const cells = useMemo(() => {
     const cells: JSX.Element[] = [];
     let day = new Date(startDate);
@@ -66,20 +65,20 @@ export default function Cells({
           key={day.toISOString()}
           className={`
             relative border border-gray-200 p-2 flex flex-col min-h-40
-            ${isCurrentMonth ? 'bg-white' : 'bg-gray-50 text-gray-400'}
+            ${isCurrentMonth ? 'bg-white' : 'bg-layout text-secondary'}
             ${day.getDay() === 1 ? 'border-l-0' : ''}
             ${day.getDay() === 0 ? 'border-r-0' : ''}
           `}
         >
-          <CalendarDay currentDay={day} />
+          <Day currentDay={day} />
           <div className='flex-1 overflow-y-auto scrollbar-hide space-y-1'>
             {dayEvents.slice(0, 3).map(event => (
               <Fragment key={event.id}>
-                <CalendarEvent event={event} />
+                <Event event={event} />
               </Fragment>
             ))}
             {dayEvents.length > 3 && (
-              <CalendarExtraEvent
+              <EventExtraButton
                 dayEvents={dayEvents}
                 count={dayEvents.length - 3}
               />

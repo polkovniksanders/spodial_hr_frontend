@@ -6,7 +6,7 @@ import { useTransition } from 'react';
 import { attachCalendarActions } from '@/app/actions/attach-calendar-actions';
 import { H1 } from '@/components/ui/typography/H1';
 
-import OnboardingImage from './onboarding-image';
+import OnboardingImage from '../server/onboarding-image';
 
 export default function OnboardingTrigger() {
   const [isPending, startTransition] = useTransition();
@@ -49,7 +49,7 @@ export default function OnboardingTrigger() {
         <OnboardingImage />
         {isPending && (
           <p className='text-sm mt-4 text-muted-foreground'>
-            Открываем Google...
+            Waiting Google...
           </p>
         )}
       </button>
