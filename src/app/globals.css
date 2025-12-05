@@ -19,6 +19,7 @@
 
     --border-primary: #d3ded6;
     --border-table: rgba(79, 178, 104, 0.25);
+    --border-secondary: #D3DED6;
 
     --bg-hover: rgba(10, 66, 30, 0.16);
     --bg-hover-light: rgba(10, 66, 30, 0.04);
@@ -41,8 +42,9 @@
   .text-placeholder { color: var(--text-placeholder); }
 
   .border-table { border: 1px solid var(--border-table); }
-  .border-primary { border: 1px solid var(--color-primary); }
+  .border-primary { border: 1px solid var(--border-primary); }
   .border-layout { border: 1px solid var(--border-primary); }
+  .border-secondary  { border: 1px solid var(--border-secondary); }
 
   .hover\:bg-hover-light:hover { background-color: var(--bg-hover-light); }
   .hover\:bg-hover:hover { background-color: var(--bg-hover); }

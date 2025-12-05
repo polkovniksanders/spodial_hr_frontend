@@ -6,7 +6,7 @@ import Card from '@/components/ui/card/Card';
 export default function Page() {
   return (
     <Card>
-      <div className={'w-[546px] my-[100px] mx-[72px]'}>
+      <div className={'w-[690px] py-[100px] px-[72px]'}>
         <AuthTitle type={AUTH_TITLE_VARIANT.REGISTER} />
         <RegisterForm />
       </div>

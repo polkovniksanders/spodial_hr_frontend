@@ -23,7 +23,7 @@ export default async function Analysis({ id }: { id: number }) {
   const followUps: FollowUpsResponse = await getFollowUps(id);
 
   if (!followUps?.data || followUps.data.length === 0) {
-    return <div>No follow up</div>;
+    return <div>No analysis</div>;
   }
 
   const latestId = Math.max(...followUps.data.map(item => item.id));

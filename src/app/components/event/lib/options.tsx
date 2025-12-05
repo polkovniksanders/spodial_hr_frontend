@@ -2,6 +2,8 @@ import { parse as dateParse, format } from 'date-fns';
 import parse from 'html-react-parser';
 import { Clock4, Dot, TextAlignJustify, Video } from 'lucide-react';
 
+import ButtonCopy from '@/components/ui/button/button-copy';
+
 import type { EventProps } from '@/app/components/event/service/event.interface';
 
 function formatDate(dateString: string) {
@@ -36,7 +38,11 @@ export const items = [
   {
     Icon: Video,
     label: 'url',
-    value: (d: EventProps) => d.url,
+    value: (d: EventProps) => (
+      <div className={'flex flex-row gap-2.5 items-center'}>
+        {d.url} <ButtonCopy copyText={d.url} />
+      </div>
+    ),
   },
   {
     Icon: TextAlignJustify,
