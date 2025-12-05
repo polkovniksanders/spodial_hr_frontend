@@ -1,10 +1,9 @@
-// components/LinearProgress.tsx
 import type { ComponentProps } from 'react';
 
 interface LinearProgressProps extends ComponentProps<'div'> {
   value: number; // 0–100
   height?: number; // высота полосы (px), по умолчанию 60
-  textClassName?: string; // доп. классы для текста
+  textClassName?: string;
 }
 
 export default function LinearProgress({
