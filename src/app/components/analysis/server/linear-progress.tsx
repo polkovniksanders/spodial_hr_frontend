@@ -1,19 +1,20 @@
+import { METRIC_MAX_SCORE } from '@/app/components/analysis/lib/options';
+
 import type { ComponentProps } from 'react';
 
 interface LinearProgressProps extends ComponentProps<'div'> {
-  value: number; // 0–100
-  height?: number; // высота полосы (px), по умолчанию 60
-  textClassName?: string;
+  value: number; // 0–4
+  height?: number; // высота полосы
 }
 
 export default function LinearProgress({
   value,
-  height = 20,
+  height = 10,
   className = '',
-  textClassName = '',
   ...props
 }: LinearProgressProps) {
-  const normalized = Math.max(0, Math.min(100, value));
+  const normalized =
+    (Math.max(0, Math.min(METRIC_MAX_SCORE, value)) / METRIC_MAX_SCORE) * 100;
 
   return (
     <div
@@ -25,15 +26,6 @@ export default function LinearProgress({
         className='h-full bg-primary  transition-all duration-1000 ease-out'
         style={{ width: `${normalized}%` }}
       />
-
-      <div className='absolute inset-0 flex items-center justify-center pointer-events-none'>
-        <span
-          className={`font-bold text-primary select-none ${textClassName}`}
-          style={{ fontSize: height * 0.55 }}
-        >
-          {Math.round(normalized)}
-        </span>
-      </div>
     </div>
   );
 }
