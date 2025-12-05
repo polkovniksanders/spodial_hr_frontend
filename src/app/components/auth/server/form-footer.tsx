@@ -28,7 +28,7 @@ export default function FormFooter({
       <div className={'flex gap-1'}>
         <p>{secondaryText}</p>
         <Hover>
-          <Link className={'text-primary font-bold'} href={secondaryRoute}>
+          <Link className={'text-accent font-bold'} href={secondaryRoute}>
             {primaryText}
           </Link>
         </Hover>

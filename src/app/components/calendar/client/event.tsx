@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { Circle, CircleCheckBig } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react';
@@ -46,17 +47,24 @@ const Event = ({ event }: { event: EventProps }) => {
         handleClick(e);
         e.stopPropagation();
       }}
-      className='flex flex-row items-center gap-2 rounded-full px-[10px] py-[6px] bg-primary text-white transition-colors cursor-pointer select-none'
+      className={clsx(
+        'flex flex-row items-center gap-2 rounded-full px-[10px] py-[6px] transition-colors cursor-pointer select-none',
+        isPast ? 'bg-scheduled text-primary' : 'bg-primary text-white ',
+      )}
     >
       <div className='flex flex-row items-center gap-2 flex-shrink-0'>
-        {isPast ? <CircleCheckBig size={14} /> : <Circle size={14} />}
+        {isPast ? (
+          <CircleCheckBig className={'text-accent'} size={14} />
+        ) : (
+          <Circle size={14} />
+        )}
         {isPast && (
-          <p className='text-xs line-through whitespace-nowrap'>
+          <p className='text-xs text-secondary line-through whitespace-nowrap'>
             {formatDate(event.starts_at)}
           </p>
         )}
       </div>
-      <p className='text-xs truncate min-w-0'>{title}</p>
+      <p className='text-xs font-bold truncate min-w-0'>{title}</p>
     </div>
   );
 };
