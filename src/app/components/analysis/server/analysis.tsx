@@ -1,18 +1,20 @@
 import { Minus } from 'lucide-react';
 
 import { findMinMaxKeys } from '@/app/components/analysis/lib/findMinMaxKeys';
-import { renderScore } from '@/app/components/analysis/lib/getTotalScore';
 import { getMetricLabel } from '@/app/components/analysis/lib/metricsKeyMap';
-import ComponentCard from '@/app/components/analysis/server/ComponentCard';
-import DonutChart from '@/app/components/analysis/server/DonatChart';
-import Insights from '@/app/components/analysis/server/Insights';
-import LinearProgress from '@/app/components/analysis/server/LinearProgress';
-import LinearProgressAgenda from '@/app/components/analysis/server/LinearProgressAgenda';
+import { MAX_TOTAL_SCORE } from '@/app/components/analysis/lib/options';
+import { renderScore } from '@/app/components/analysis/lib/score';
+import ComponentCard from '@/app/components/analysis/server/component-card';
+import Conclusion from '@/app/components/analysis/server/conclusion';
+import DonutChart from '@/app/components/analysis/server/donat-chart';
+import LinearProgress from '@/app/components/analysis/server/linear-progress';
+import LinearProgressAgenda from '@/app/components/analysis/server/linear-progress-agenda';
+import MinMax from '@/app/components/analysis/server/min-max';
 import {
   getFollowUp,
   getFollowUps,
 } from '@/app/components/follow-up/service/get-follow-up';
-import { H2 } from '@/components/ui/typography/H2';
+import { H4 } from '@/components/ui/typography/H4';
 
 import type {
   FollowUpResponse,
@@ -47,9 +49,13 @@ export default async function Analysis({ id }: { id: number }) {
       <div className={'flex flex-row items-center gap-4'}>
         <DonutChart value={parsed.total_score} />
 
-        <div className={'flex flex-col gap-3'}>
-          <H2>Итоговый бал:{parsed.total_score} </H2>
-          {renderScore(parsed.total_score)}
+        <div className={'flex flex-col gap-1'}>
+          <H4>
+            Итоговый бал:{' '}
+            <span className={'font-bold'}>{parsed.total_score}</span> из{' '}
+            <span className={'font-bold'}>{MAX_TOTAL_SCORE}</span>
+          </H4>
+          <p className={'text-secondary'}>{renderScore(parsed.total_score)}</p>
         </div>
       </div>
 
@@ -57,18 +63,20 @@ export default async function Analysis({ id }: { id: number }) {
         <p className={'text-[16px] font-bold'}>Быстрый срез</p>
         <div className={'grid grid-cols-2 gap-4'}>
           <ComponentCard>
-            <p>Максимальный вклад</p>
+            <p className={'font-medium text-[20px] mb-2'}>Максимальный вклад</p>
 
             <div className={'flex flex-row'}>
               {getMetricLabel(maxKey)}
-              <Minus /> {maxValue} из 4
+              <Minus /> <MinMax minValue={maxValue} />
             </div>
           </ComponentCard>
           <ComponentCard>
-            <p>Главный фокус на рост</p>
+            <p className={'font-medium text-[20px] mb-2'}>
+              Главный фокус на рост
+            </p>
             <div className={'flex flex-row'}>
               {getMetricLabel(minKey)} <Minus />
-              {minValue} из 4
+              <MinMax minValue={minValue} />
             </div>
           </ComponentCard>
         </div>
@@ -78,8 +86,7 @@ export default async function Analysis({ id }: { id: number }) {
         <p className={'text-[16px] font-bold'}>Подготовка ко встрече</p>
         <ComponentCard>
           <LinearProgressAgenda
-            min={0}
-            max={4}
+            value={parsed.metrics.client_research_and_goal_setting}
             title={'Исследование клиента и постановка целей'}
           />
           <LinearProgress
@@ -93,19 +100,24 @@ export default async function Analysis({ id }: { id: number }) {
 
         <div className={'grid grid-cols-3 gap-4'}>
           <ComponentCard>
-            <LinearProgressAgenda min={0} max={4} title={'Small Talk'} />
-            <LinearProgress value={parsed.metrics.small_talk} />
-          </ComponentCard>
-
-          <ComponentCard>
-            <LinearProgressAgenda min={0} max={4} title={'Регламент встречи'} />
+            <LinearProgressAgenda
+              value={parsed.metrics.small_talk}
+              title={'Small Talk'}
+            />
             <LinearProgress value={parsed.metrics.small_talk} />
           </ComponentCard>
 
           <ComponentCard>
             <LinearProgressAgenda
-              min={0}
-              max={4}
+              value={parsed.metrics.small_talk}
+              title={'Регламент встречи'}
+            />
+            <LinearProgress value={parsed.metrics.small_talk} />
+          </ComponentCard>
+
+          <ComponentCard>
+            <LinearProgressAgenda
+              value={parsed.metrics.small_talk}
               title={'Формирование доверия'}
             />
             <LinearProgress value={parsed.metrics.small_talk} />
@@ -118,22 +130,34 @@ export default async function Analysis({ id }: { id: number }) {
 
         <div className={'grid grid-cols-4 gap-4'}>
           <ComponentCard>
-            <LinearProgressAgenda min={0} max={4} title={'SPIN: Situational'} />
+            <LinearProgressAgenda
+              value={parsed.metrics.spin_questions.situational}
+              title={'SPIN: Situational'}
+            />
             <LinearProgress value={parsed.metrics.spin_questions.situational} />
           </ComponentCard>
 
           <ComponentCard>
-            <LinearProgressAgenda min={0} max={4} title={'SPIN: Problem'} />
+            <LinearProgressAgenda
+              value={parsed.metrics.spin_questions.problem}
+              title={'SPIN: Problem'}
+            />
             <LinearProgress value={parsed.metrics.spin_questions.problem} />
           </ComponentCard>
 
           <ComponentCard>
-            <LinearProgressAgenda min={0} max={4} title={'SPIN: Implication'} />
+            <LinearProgressAgenda
+              value={parsed.metrics.spin_questions.implication}
+              title={'SPIN: Implication'}
+            />
             <LinearProgress value={parsed.metrics.spin_questions.implication} />
           </ComponentCard>
 
           <ComponentCard>
-            <LinearProgressAgenda min={0} max={4} title={'SPIN: Need-payoff'} />
+            <LinearProgressAgenda
+              value={parsed.metrics.spin_questions.need_payoff}
+              title={'SPIN: Need-payoff'}
+            />
             <LinearProgress value={parsed.metrics.spin_questions.need_payoff} />
           </ComponentCard>
         </div>
@@ -145,8 +169,7 @@ export default async function Analysis({ id }: { id: number }) {
         <div className={'grid grid-cols-1 gap-4'}>
           <ComponentCard>
             <LinearProgressAgenda
-              min={0}
-              max={4}
+              value={parsed.metrics.product_presentation_alignment}
               title={'Презентация продукта'}
             />
             <LinearProgress
@@ -162,16 +185,14 @@ export default async function Analysis({ id }: { id: number }) {
         <div className={'grid grid-cols-2 gap-4'}>
           <ComponentCard>
             <LinearProgressAgenda
-              min={0}
-              max={4}
+              value={parsed.metrics.proposal_discussion}
               title={'Обсуждение предложения'}
             />
             <LinearProgress value={parsed.metrics.proposal_discussion} />
           </ComponentCard>
           <ComponentCard>
             <LinearProgressAgenda
-              min={0}
-              max={4}
+              value={parsed.metrics.commitment_to_next_steps}
               title={'Фиксация следующих шагов'}
             />
             <LinearProgress value={parsed.metrics.commitment_to_next_steps} />
@@ -185,8 +206,7 @@ export default async function Analysis({ id }: { id: number }) {
         <div className={'grid grid-cols-3 gap-4'}>
           <ComponentCard>
             <LinearProgressAgenda
-              min={0}
-              max={4}
+              value={parsed.metrics.objection_handling.algorithm_adherence}
               title={'Алгоритм работы с возражениями'}
             />
             <LinearProgress
@@ -195,8 +215,7 @@ export default async function Analysis({ id }: { id: number }) {
           </ComponentCard>
           <ComponentCard>
             <LinearProgressAgenda
-              min={0}
-              max={4}
+              value={parsed.metrics.objection_handling.response_effectiveness}
               title={'Эффективность ответа'}
             />
             <LinearProgress
@@ -205,8 +224,7 @@ export default async function Analysis({ id }: { id: number }) {
           </ComponentCard>
           <ComponentCard>
             <LinearProgressAgenda
-              min={0}
-              max={4}
+              value={parsed.metrics.objection_handling.proactive_prevention}
               title={'Проактивная профилактика'}
             />
             <LinearProgress
@@ -222,8 +240,7 @@ export default async function Analysis({ id }: { id: number }) {
         <div className={'grid grid-cols-2 gap-4'}>
           <ComponentCard>
             <LinearProgressAgenda
-              min={0}
-              max={4}
+              value={parsed.metrics.language_and_communication.clarity}
               title={'Ясность коммуникации'}
             />
             <LinearProgress
@@ -232,8 +249,7 @@ export default async function Analysis({ id }: { id: number }) {
           </ComponentCard>
           <ComponentCard>
             <LinearProgressAgenda
-              min={0}
-              max={4}
+              value={parsed.metrics.language_and_communication.empathy}
               title={'Эмпатия и активное слушание'}
             />
             <LinearProgress
@@ -243,7 +259,7 @@ export default async function Analysis({ id }: { id: number }) {
         </div>
       </div>
 
-      <Insights list={parsed.conclusion} />
+      <Conclusion list={parsed.conclusion} />
     </div>
   );
 }
