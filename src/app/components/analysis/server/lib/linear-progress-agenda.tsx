@@ -6,13 +6,13 @@ export default function LinearProgressAgenda({
   value,
 }: {
   title: string;
-  value: number;
+  value: string;
 }) {
   return (
     <div className={'mb-2'}>
       <div className={'flex flex-row justify-between'}>
         <p className={'text-[14px]'}>{title}</p>
-        <MinMax minValue={value || 0} maxValue={METRIC_MAX_SCORE} />
+        <MinMax minValue={+value || 0} maxValue={METRIC_MAX_SCORE} />
       </div>
     </div>
   );

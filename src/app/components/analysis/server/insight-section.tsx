@@ -12,14 +12,7 @@ export function InsightSection({ title, items }: Props) {
         {items.map((item, i) => (
           <li key={i} className='flex'>
             <span className='text-accent mr-2'>•</span>
-            <span
-              dangerouslySetInnerHTML={{
-                __html: item.replaceAll(
-                  'Цитата: ',
-                  '<br><span class="text-secondary italic">Цитата: </span>',
-                ),
-              }}
-            />
+            <p>{item}</p>
           </li>
         ))}
       </ul>

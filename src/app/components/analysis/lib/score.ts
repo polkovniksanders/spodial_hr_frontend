@@ -1,5 +1,3 @@
-import { MAX_TOTAL_SCORE } from '@/app/components/analysis/lib/options';
-
 function countScoreHint(percentage: number) {
   if (percentage >= 85) {
     return 'Экспертный уровень исполнения методологии Stayfitt.';
@@ -21,9 +19,12 @@ function clampPercentage(value: number) {
   return Math.max(0, Math.min(100, value));
 }
 
-export function renderScore(totalScore: number) {
-  const cappedScore = Math.min(totalScore, MAX_TOTAL_SCORE);
-  const percentage = clampPercentage((cappedScore / MAX_TOTAL_SCORE) * 100);
+export function renderScoreDescription(
+  totalScore: number,
+  maxTotalScore: number,
+) {
+  const cappedScore = Math.min(totalScore, maxTotalScore);
+  const percentage = clampPercentage((cappedScore / maxTotalScore) * 100);
 
   return countScoreHint(percentage);
 }
