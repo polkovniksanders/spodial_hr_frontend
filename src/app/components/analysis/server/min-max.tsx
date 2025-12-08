@@ -10,7 +10,7 @@ export default function MinMax({
   return (
     <span>
       <p className={'text-[14px]'}>
-        {minValue} из {maxValue}
+        {minValue} out of {maxValue}
       </p>
     </span>
   );

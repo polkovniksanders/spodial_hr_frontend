@@ -13,8 +13,8 @@ const getFont = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'HR',
-  description: 'HR Description',
+  title: 'Ask Wanda',
+  description: 'Best App',
 };
 
 export default function RootLayout({

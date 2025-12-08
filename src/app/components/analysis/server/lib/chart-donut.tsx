@@ -7,7 +7,7 @@ interface DonutChartProps extends ComponentProps<'div'> {
   textClassName?: string;
 }
 
-export default function DonutChart({
+export default function ChartDonut({
   value,
   size = 200,
   strokeWidth = 30,

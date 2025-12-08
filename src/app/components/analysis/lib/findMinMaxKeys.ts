@@ -1,43 +1,31 @@
-type Metrics = Record<string, any>;
+import type {
+  AnalysisJSON,
+  MetricItem,
+} from '@/app/components/analysis/service/analysis.interface';
 
-export function findMinMaxKeys(obj: Metrics) {
-  const flat: Record<string, number> = {};
+export function findMinMax(metrics: AnalysisJSON['metrics']) {
+  let minItem: MetricItem | null = null;
+  let maxItem: MetricItem | null = null;
 
-  function traverse(o: Metrics, prefix = '') {
-    for (const key in o) {
-      const value = o[key];
-      const path = prefix ? `${prefix}.${key}` : key;
+  for (const group of metrics) {
+    for (const item of group.value) {
+      const val = Number(item.value);
+      if (Number.isNaN(val)) continue;
 
-      if (typeof value === 'number') {
-        flat[path] = value;
-      } else if (typeof value === 'object' && value !== null) {
-        traverse(value, path);
+      if (minItem === null || val < Number(minItem.value)) {
+        minItem = item;
+      }
+
+      if (maxItem === null || val > Number(maxItem.value)) {
+        maxItem = item;
       }
     }
   }
 
-  traverse(obj);
-
-  const entries = Object.entries(flat);
-
-  let min: [string, number] = entries[0];
-  for (const entry of entries) {
-    if (entry[1] < min[1]) {
-      min = entry;
-    }
-  }
-
-  let max: [string, number] = entries[0];
-  for (const entry of entries) {
-    if (entry[1] > max[1]) {
-      max = entry;
-    }
-  }
-
   return {
-    minKey: min[0],
-    minValue: min[1],
-    maxKey: max[0],
-    maxValue: max[1],
+    minName: minItem?.display_name ?? null,
+    minValue: minItem ? Number(minItem.value) : null,
+    maxName: maxItem?.display_name ?? null,
+    maxValue: maxItem ? Number(maxItem.value) : null,
   };
 }
