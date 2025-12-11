@@ -82,7 +82,7 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
     >
       <div
         className={cn(
-          'px-8 flex items-center rounded-full h-[54px] w-full',
+          'px-6 flex items-center rounded-full h-[54px] w-full',
           'border bg-white transition-colors focus-within:border-primary focus-within:ring-2 focus-within:ring-offset-0 focus-within:ring-[#4FB268]',
           error ? 'border-red-700' : 'border-secondary',
           'relative',

@@ -48,7 +48,7 @@ const Event = ({ event }: { event: EventProps }) => {
         e.stopPropagation();
       }}
       className={clsx(
-        'flex flex-row items-center gap-2 rounded-full px-[10px] py-[6px] transition-colors cursor-pointer select-none',
+        'flex flex-row items-center gap-2 rounded-full p-[6px] mb-1 transition-colors cursor-pointer select-none',
         isPast ? 'bg-scheduled text-primary' : 'bg-primary text-white ',
       )}
     >

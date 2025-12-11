@@ -28,7 +28,7 @@ export default function UserInfo({ name, email }: UserProps) {
   };
 
   return (
-    <div className={'flex gap-[8px] items-center justify-end mb-4'}>
+    <div className={'flex gap-[8px] items-center justify-end'}>
       <div ref={anchorRef} className={'flex flex-col text-right'}>
         <p className={'text-accent'}>{name}</p>
         <p className={'text-secondary'}>{email}</p>

@@ -1,12 +1,13 @@
-import Input from '@/components/ui/input/Input';
 import Checkbox from '@/components/ui/input/Checkbox';
+import Input from '@/components/ui/input/Input';
 import PasswordInput from '@/components/ui/input/InputPassword';
+import InputTextarea from '@/components/ui/input/InputTextarea';
 
+import type { ReactNode } from 'react';
 import type {
   ControllerRenderProps,
   ControllerFieldState,
 } from 'react-hook-form';
-import type { ReactNode } from 'react';
 
 type FieldConfig = {
   label: string;
@@ -58,6 +59,23 @@ export const VARIANT_MAPPER = {
       />
     );
   },
+  inputTextarea: function InputVariant({
+    field,
+    fieldState,
+    config,
+  }: VariantProps) {
+    return (
+      <InputTextarea
+        {...field}
+        label={config.label}
+        error={fieldState.error?.message}
+      />
+    );
+  },
 } as const;
 
-export type VariantType = 'input' | 'checkbox' | 'inputPassword';
+export type VariantType =
+  | 'input'
+  | 'checkbox'
+  | 'inputPassword'
+  | 'inputTextarea';

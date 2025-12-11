@@ -13,16 +13,18 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   className?: string;
   loading?: boolean;
+  loadingText?: string;
 }
 
-const Loader = () => (
+const Loader = ({ text }: { text: string }) => (
   <div className='flex items-center justify-center gap-2'>
     <div className='animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent' />
-    <p>Please, wait</p>
+    <p>{text}</p>
   </div>
 );
 
 export function Button({
+  loadingText = 'Please, wait',
   children,
   variant = BUTTON_VARIANT.primary,
   className,
@@ -56,7 +58,7 @@ export function Button({
         aria-disabled={isDisabled}
         {...rest}
       >
-        {loading ? <Loader /> : children}
+        {loading ? <Loader text={loadingText} /> : children}
       </button>
     </Border>
   );

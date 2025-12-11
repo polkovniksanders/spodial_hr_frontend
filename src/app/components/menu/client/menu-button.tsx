@@ -14,8 +14,8 @@ export default function MenuButton({ item }: { item: MenuProps }) {
 
   const isActive = item.route === segment;
 
-  const Icon = item.iconKey
-    ? (ICONS[item.iconKey as keyof typeof ICONS] ?? Calendar)
+  const Icon = item.key
+    ? (ICONS[item.key as keyof typeof ICONS] ?? Calendar)
     : null;
 
   return (

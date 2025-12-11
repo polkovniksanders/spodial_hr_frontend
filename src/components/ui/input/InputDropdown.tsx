@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { ChevronDown, X, Check } from 'lucide-react';
+import { ChevronDown, Check } from 'lucide-react';
 import React, {
   useState,
   useRef,
@@ -47,7 +47,6 @@ const InputDropdown = forwardRef<
     multiple = false,
     disabled = false,
     searchable = true,
-    clearable = true,
     className,
     error = false,
     helperText,
@@ -61,7 +60,6 @@ const InputDropdown = forwardRef<
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Controlled значение
   const selectedValues = multiple
     ? Array.isArray(value)
       ? value
@@ -102,12 +100,6 @@ const InputDropdown = forwardRef<
     }
 
     onChange?.(newValue);
-  };
-
-  const clearSelection = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onChange?.(multiple ? [] : '');
-    setSearchQuery('');
   };
 
   const toggleOpen = () => {
@@ -214,16 +206,6 @@ const InputDropdown = forwardRef<
                 className='inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full'
               >
                 {label}
-                {/*<button
-                  onClick={e => {
-                    e.stopPropagation();
-                    const option = options.find(o => o.label === label);
-                    if (option) selectOption(option);
-                  }}
-                  className='hover:bg-blue-200 rounded-full p-0.5'
-                >
-                  <X className='w-3 h-3' />
-                </button>*/}
               </span>
             ))
           ) : (
@@ -239,14 +221,6 @@ const InputDropdown = forwardRef<
         </div>
 
         <div className='flex items-center gap-2 ml-2'>
-          {/* {clearable && selectedValues.length > 0 && !disabled && (
-            <button
-              onClick={clearSelection}
-              className='p-1 hover:bg-gray-200 rounded-full transition'
-            >
-              <X className='w-4 h-4 text-gray-500' />
-            </button>
-          )}*/}
           <ChevronDown
             className={clsx(
               'w-5 h-5 text-gray-500 transition-transform',
