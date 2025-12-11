@@ -28,7 +28,7 @@ export const MonthSwitcher = ({ onMonthChange, currentMonth }: Props) => {
   ];
 
   return (
-    <div className={'flex flex-row justify-between px-[38px] py-[24px]'}>
+    <div className={'flex flex-row justify-between'}>
       <div className='flex items-center gap-[11px]'>
         {buttons.map((button, index) => {
           const Icon = button.icon;

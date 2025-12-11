@@ -38,7 +38,7 @@ export default function OnboardingTrigger() {
   };
 
   return (
-    <div className='flex flex-col gap-7.5 justify-center items-center h-full w-full py-12'>
+    <div className='flex flex-col gap-7.5 justify-center items-center h-full w-full'>
       <H1>Continue with Google</H1>
       <button
         type='button'

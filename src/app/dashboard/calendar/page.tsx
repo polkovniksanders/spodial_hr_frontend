@@ -9,7 +9,7 @@ import SpinLoader from '@/components/ui/layout/spin-loader';
 import { getSources } from '@/shared/lib/get-sources';
 
 const Wrapper = ({ children }: PropsWithChildren) => (
-  <Card className='h-fit'>{children}</Card>
+  <Card className='h-full flex flex-col overflow-hidden'>{children}</Card>
 );
 
 const UnattachedView = () => (

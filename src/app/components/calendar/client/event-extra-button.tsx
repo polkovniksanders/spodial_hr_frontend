@@ -33,7 +33,7 @@ export default function EventExtraButton({
         handleClick(e);
         e.stopPropagation();
       }}
-      className='cursor-pointer text-xs text-gray-500 text-center py-1'
+      className='cursor-pointer text-xs text-gray-500 text-center'
     >
       +{count} more
     </div>

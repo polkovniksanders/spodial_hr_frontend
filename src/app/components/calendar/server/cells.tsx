@@ -12,6 +12,7 @@ import { Fragment, type JSX, useMemo } from 'react';
 import Event from '@/app/components/calendar/client/event';
 import EventExtraButton from '@/app/components/calendar/client/event-extra-button';
 import Day from '@/app/components/calendar/server/day';
+import DayOfWeek from '@/app/components/calendar/server/day-of-week';
 
 import type { EventProps } from '@/app/components/event/service/event.interface';
 
@@ -64,14 +65,15 @@ export default function Cells({
         <div
           key={day.toISOString()}
           className={`
-            relative border border-gray-200 p-2 flex flex-col min-h-40
+            relative border border-gray-200 flex flex-col h-full px-1
             ${isCurrentMonth ? 'bg-white' : 'bg-layout text-secondary'}
             ${day.getDay() === 1 ? 'border-l-0' : ''}
             ${day.getDay() === 0 ? 'border-r-0' : ''}
           `}
         >
           <Day currentDay={day} />
-          <div className='flex-1 overflow-y-auto scrollbar-hide space-y-1'>
+
+          <div className='flex-1 min-h-0'>
             {dayEvents.slice(0, 3).map(event => (
               <Fragment key={event.id}>
                 <Event event={event} />

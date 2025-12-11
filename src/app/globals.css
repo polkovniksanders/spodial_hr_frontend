@@ -51,6 +51,10 @@
   .bg-selected { background-color: var(--bg-selected); }
   .bg-completed { background-color: var(--bg-completed); }
 
+  .border-b-table {
+    border-bottom: 1px solid var(--border-table);
+  }
+
   /* Тени и эффекты из твоего дизайна */
   .shadow-primary {
     box-shadow: 15px 13px 21.6px 0 rgba(10, 66, 30, 0.04);
@@ -60,4 +64,8 @@
 /* Шрифт */
 body {
   font-family: Inter, system-ui, sans-serif;
+}
+
+html, body, #__next {
+  height: 100%;
 }
