@@ -24,7 +24,7 @@ export async function createMethodology(
   const authHeaders = await getAuthHeaders();
 
   const payload = {
-    organization: id,
+    organization_id: id,
     ...data,
   };
 
@@ -62,7 +62,7 @@ export async function updateMethodology(
   const authHeaders = await getAuthHeaders();
 
   const payload = {
-    organization: id,
+    organization_id: id,
     ...data,
   };
 
