@@ -1,13 +1,8 @@
 /**
- * Проверяет, прошло ли событие по его дате окончания
- * @param endsAtUtc строка формата "yyyy-MM-dd HH:mm:ss"
- * @returns true если событие уже завершилось
+ * Проверяет, прошло ли событие по локальному времени пользователя
+ * @param endsAt строка формата "yyyy-MM-dd HH:mm:ss" (локальное время)
  */
-
-export function isEventPast(endsAtUtc: string): boolean {
-  const isoString = endsAtUtc.replace(' ', 'T') + 'Z';
-
-  const endDateUtc = new Date(isoString);
-
-  return endDateUtc.getTime() < Date.now();
+export function isEventPast(endsAt: string): boolean {
+  const localDate = new Date(endsAt.replace(' ', 'T'));
+  return localDate.getTime() < Date.now();
 }
