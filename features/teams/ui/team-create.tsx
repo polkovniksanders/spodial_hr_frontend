@@ -1,0 +1,17 @@
+import Link from 'next/link';
+
+import { BUTTON } from '@/shared/lib/buttons';
+import { ROUTES } from '@/shared/lib/routes';
+import { Button } from '@/shared/ui/button/Button';
+
+export default function TeamCreate() {
+  const route = `${ROUTES.DASHBOARD.TEAMS}/create`;
+
+  return (
+    <div className={'mt-auto w-[170px]'}>
+      <Link href={route}>
+        <Button>{BUTTON.CREATE}</Button>
+      </Link>
+    </div>
+  );
+}

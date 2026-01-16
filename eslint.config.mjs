@@ -48,10 +48,13 @@ export default defineConfig([
     },
     settings: {
       "import/resolver": {
-        typescript: true,
+        typescript: {
+          project: './tsconfig.json',
+        },
         node: true,
       },
     },
+
     rules: {
       "import/no-unresolved": "error",
       "import/order": [

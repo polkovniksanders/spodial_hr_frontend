@@ -1,0 +1,101 @@
+'use server';
+
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+
+import { getAuthHeaders } from '@/shared/lib/getAuthToken';
+import { ROUTES } from '@/shared/lib/routes';
+
+import type { LoginDTO, RegisterDTO } from '@/features/auth/model/types';
+
+const API_URL = process.env.API_URL;
+
+if (!API_URL) {
+  throw new Error('API_URL is not defined on server');
+}
+
+export async function login(data: LoginDTO): Promise<void> {
+  const res = await fetch(`${API_URL}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+    cache: 'no-store',
+  });
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json?.message || 'Login failed');
+  }
+
+  if (json.token) {
+    const cookieStore = await cookies();
+    cookieStore.set({
+      name: 'token',
+      value: json.token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    });
+  }
+
+  redirect(ROUTES.DASHBOARD.CALENDAR);
+}
+
+export async function register(data: RegisterDTO): Promise<void> {
+  const res = await fetch(`${API_URL}/auth/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+    cache: 'no-store',
+  });
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json?.message || 'Registration failed');
+  }
+
+  if (json.token) {
+    const cookieStore = await cookies();
+    cookieStore.set({
+      name: 'token',
+      value: json.token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    });
+  }
+
+  redirect(ROUTES.AUTH.ORGANIZATION);
+}
+
+export async function logout(): Promise<void> {
+  const authHeaders = await getAuthHeaders();
+
+  const res = await fetch(`${API_URL}/auth/logout`, {
+    method: 'POST',
+    headers: {
+      ...authHeaders,
+      'Content-Type': 'application/json',
+    },
+    cache: 'no-store',
+  });
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json?.message || 'logout failed');
+  }
+
+  const cookieStore = await cookies();
+  cookieStore.delete('token');
+
+  redirect(ROUTES.AUTH.LOGIN);
+}
