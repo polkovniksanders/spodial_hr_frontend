@@ -8,7 +8,7 @@ import type { AnalysisJSON } from '@/features/analysis/model/types';
 import type {
   FollowUpResponse,
   FollowUpsResponse,
-} from '@/features/follow-up/service/follow-up.interface';
+} from '@/features/follow-up/model/types';
 
 export default async function Analysis({ id }: { id: number }) {
   const followUps: FollowUpsResponse = await getFollowUps(id);

@@ -1,6 +1,8 @@
 import { ArrowLeftRight, Trash } from 'lucide-react';
 
-export default function TeamMember({ member }) {
+import type { TeamProps } from '@/features/teams/model/types';
+
+export default function TeamMember({ member }: { member: TeamProps }) {
   return (
     <div className={'w-full bg-secondary rounded-[16px] gap-5 px-4 py-5'}>
       <div className={'flex flex-row justify-between'}>

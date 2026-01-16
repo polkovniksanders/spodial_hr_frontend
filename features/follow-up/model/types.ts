@@ -1,4 +1,4 @@
-import type { GuestCore } from '@/features/participants/service/participant.interface';
+import type { GuestCore } from '@/features/participants/model/types';
 
 export interface FollowUpResponse {
   data: FollowUpDetailProps;

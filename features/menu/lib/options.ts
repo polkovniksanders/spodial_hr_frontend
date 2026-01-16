@@ -8,7 +8,7 @@ import {
 
 import { ROUTES } from '@/shared/lib/routes';
 
-import type { MenuProps } from '@/features/menu/types/menu';
+import type { MenuProps } from '@/features/menu/model/types';
 
 export const MENU_ITEMS: MenuProps[] = [
   {

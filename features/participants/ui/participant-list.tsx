@@ -5,7 +5,7 @@ import Avatar from '@/shared/ui/common/avatar';
 import type {
   AttendeeProps,
   GuestProps,
-} from '@/features/participants/service/participant.interface';
+} from '@/features/participants/model/types';
 
 export const ParticipantList = ({
   data,
