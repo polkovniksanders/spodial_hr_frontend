@@ -18,9 +18,15 @@ if (!API_URL) {
   throw new Error('API_URL is not defined');
 }
 export async function createMethodology(
+  id: number | undefined,
   data: MethodologyDTO,
 ): Promise<MethodologyProps> {
   const authHeaders = await getAuthHeaders();
+
+  const payload = {
+    methodology_id: id,
+    ...data,
+  };
 
   const res = await fetch(`${API_URL}/methodologies`, {
     method: 'POST',
@@ -28,7 +34,7 @@ export async function createMethodology(
       ...authHeaders,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(payload),
     cache: 'no-store',
   });
 
