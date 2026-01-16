@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronUp, ChevronDown, Settings } from 'lucide-react';
-import { useState, useActionState } from 'react';
+import { useState, useActionState, useEffect } from 'react';
 
 import { setActiveOrganization } from '@/app/actions/organization';
 
@@ -12,7 +12,7 @@ export default function OrganizationDropdown({
   organizationActiveId,
 }: {
   organizations: OrganizationProps[];
-  organizationActiveId: number;
+  organizationActiveId: number | null;
 }) {
   const [open, setOpen] = useState(false);
   const [, action, pending] = useActionState(setActiveOrganization, {
@@ -21,6 +21,14 @@ export default function OrganizationDropdown({
   const active = organizations.find(
     o => String(o.id) === String(organizationActiveId),
   );
+
+  useEffect(() => {
+    if (!organizationActiveId && organizations.length > 0) {
+      const formData = new FormData();
+      formData.append('organization_id', String(organizations[0].id));
+      action(formData);
+    }
+  }, []);
 
   return (
     <div className='relative w-[260px]'>
