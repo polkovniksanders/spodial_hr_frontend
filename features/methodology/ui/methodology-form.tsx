@@ -24,7 +24,7 @@ import type {
 export default function MethodologyForm({
   values,
 }: {
-  values: MethodologyProps;
+  values?: MethodologyProps;
 }) {
   const FORM_ID = 'methodology-form';
   const isEdit = Boolean(values?.id);
@@ -41,7 +41,7 @@ export default function MethodologyForm({
     startTransition(async () => {
       try {
         if (isEdit) {
-          await updateMethodology(values.id, data);
+          await updateMethodology(values?.id, data);
           toast.success('Methodology updated');
         } else {
           await createMethodology(data);

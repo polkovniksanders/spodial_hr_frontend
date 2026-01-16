@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { METHODOLOGY_FIELDS } from '@/features/methodology/lib/options';
 import MethodologyForm from '@/features/methodology/ui/methodology-form';
 import ButtonBack from '@/shared/ui/button/button-back';
 import Card from '@/shared/ui/card/Card';
@@ -17,7 +16,7 @@ export default function Page() {
       </ComponentHeader>
 
       <CardBody>
-        <MethodologyForm values={METHODOLOGY_FIELDS} />
+        <MethodologyForm />
       </CardBody>
     </Card>
   );

@@ -50,7 +50,7 @@ export async function createMethodology(
 }
 
 export async function updateMethodology(
-  id: number,
+  id: number | undefined,
   data: MethodologyDTO,
 ): Promise<MethodologyProps> {
   const authHeaders = await getAuthHeaders();
