@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import React from 'react';
 
 import { getMethodology } from '@/app/actions/methodology';
@@ -12,7 +13,12 @@ import type { PageProps } from '@/shared/types/common';
 
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
+  const cookieStore = await cookies();
+  const organization_id = cookieStore.get('organization_id')?.value;
+
   const methodology = await getMethodology(id);
+
+  if (!organization_id) return;
 
   return (
     <Card className='h-full flex flex-col'>
@@ -21,7 +27,10 @@ export default async function Page({ params }: PageProps) {
       </ComponentHeader>
 
       <CardBody>
-        <MethodologyForm values={methodology} />
+        <MethodologyForm
+          organization_id={+organization_id}
+          values={methodology}
+        />
       </CardBody>
     </Card>
   );
