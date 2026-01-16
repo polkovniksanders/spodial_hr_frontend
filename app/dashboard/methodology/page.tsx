@@ -15,7 +15,7 @@ export default async function Page() {
 
   if (!id) return;
 
-  const methodologies = await getMethodologies(id);
+  const { data: methodologies } = await getMethodologies(id);
 
   if (!methodologies) return null;
 

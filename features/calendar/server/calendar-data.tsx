@@ -1,11 +1,10 @@
-import { getEvents } from '@/app/actions/get-events';
+import { getEvents } from '@/app/actions/calendar-events';
 
 import Calendar from '../../../features/calendar/client/calendar';
 
 export default async function CalendarData() {
-  const eventsData = await getEvents();
-  if (!eventsData) return null;
-  const events = eventsData.data;
+  const { data: events } = await getEvents();
+  if (!events) return null;
 
   return <Calendar events={events} />;
 }

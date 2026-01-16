@@ -1,4 +1,4 @@
-import { getFollowUp, getFollowUps } from '@/app/actions/get-follow-up';
+import { meetingFollowUp, getFollowUps } from '@/app/actions/meeting-follow-up';
 import Conclusion from '@/features/analysis/widgets/conclusion';
 import Linear from '@/features/analysis/widgets/linear';
 import Summary from '@/features/analysis/widgets/summary';
@@ -18,7 +18,7 @@ export default async function Analysis({ id }: { id: number }) {
   }
 
   const latestId = Math.max(...followUps.data.map(item => item.id));
-  const followUp: FollowUpResponse = await getFollowUp(latestId);
+  const followUp: FollowUpResponse = await meetingFollowUp(latestId);
 
   let parsed: AnalysisJSON;
   try {

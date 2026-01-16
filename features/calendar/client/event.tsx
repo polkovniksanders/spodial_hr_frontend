@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react';
 
 import { EventPopup } from '@/features/event/client/event-popup';
-import { usePopup } from '@/shared/hooks/usePopup';
+import { useModal } from '@/shared/hooks/use-modal';
 import { formatDate } from '@/shared/lib/dateFormatter';
 import { isEventPast } from '@/shared/lib/isEventPast';
 import { ROUTES } from '@/shared/lib/routes';
@@ -19,7 +19,8 @@ const Event = ({ event }: { event: EventProps }) => {
   const isPast = isEventPast(event.ends_at);
 
   const router = useRouter();
-  const { open, close } = usePopup();
+  const { open, close } = useModal();
+
   const anchorRef = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: React.MouseEvent) => {
@@ -32,11 +33,9 @@ const Event = ({ event }: { event: EventProps }) => {
         return;
       }
 
-      open(anchorRef.current, {
-        width: 600,
-        preferredPosition: 'right',
-        content: <EventPopup close={close} event={event} />,
-      });
+      if (open) {
+        return open(<EventPopup event={event} close={close} />);
+      }
     }
   };
 
