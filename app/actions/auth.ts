@@ -43,7 +43,7 @@ export async function login(data: LoginDTO): Promise<void> {
     });
   }
 
-  redirect(ROUTES.DASHBOARD.CALENDAR);
+  redirect(ROUTES.AUTH.ORGANIZATION);
 }
 
 export async function register(data: RegisterDTO): Promise<void> {

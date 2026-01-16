@@ -78,10 +78,10 @@ export default function LoginForm() {
       <AuthFormFooter
         loading={isPending}
         formId={FORM_ID}
-        primaryButton={BUTTON_TEXT.GET_STARTED}
-        primaryText={`${BUTTON_TEXT.LOGIN} here`}
-        secondaryText={'Already have an account?'}
-        secondaryRoute={ROUTES.AUTH.LOGIN}
+        primaryButton={BUTTON_TEXT.LOGIN}
+        primaryText={`${BUTTON_TEXT.REGISTER}`}
+        secondaryText={'Dont have an account?'}
+        secondaryRoute={ROUTES.AUTH.REGISTER}
       />
     </>
   );
