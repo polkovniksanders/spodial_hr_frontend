@@ -24,7 +24,7 @@ export async function createMethodology(
   const authHeaders = await getAuthHeaders();
 
   const payload = {
-    methodology_id: id,
+    organization: id,
     ...data,
   };
 
@@ -48,7 +48,7 @@ export async function createMethodology(
   const json: ApiResponse<MethodologyProps> = await res.json();
 
   if (!json.success || !json.data) {
-    throw new Error(json.error ?? 'Invalid API response');
+    throw new Error(json.error);
   }
 
   revalidatePath('METHODOLOGY');
@@ -62,7 +62,7 @@ export async function updateMethodology(
   const authHeaders = await getAuthHeaders();
 
   const payload = {
-    methodology_id: id,
+    organization: id,
     ...data,
   };
 
