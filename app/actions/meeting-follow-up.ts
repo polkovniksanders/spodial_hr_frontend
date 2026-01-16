@@ -1,6 +1,6 @@
 import { getAuthHeaders } from '@/shared/lib/getAuthToken';
 
-export async function getFollowUp(id: number) {
+export async function meetingFollowUp(id: number) {
   const authHeaders = await getAuthHeaders();
 
   const res = await fetch(`${process.env.API_URL}/followups/${id}`, {

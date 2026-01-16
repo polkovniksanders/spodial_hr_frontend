@@ -1,7 +1,7 @@
 import { notFound, redirect } from 'next/navigation';
 import React, { Suspense } from 'react';
 
-import { getSummary } from '@/app/actions/get-summary';
+import { getSummary } from '@/app/actions/calendar-events';
 import Analysis from '@/features/analysis/ui/analysis';
 import EventOverview from '@/features/event/server/event-overview';
 import FollowUp from '@/features/follow-up/ui/follow-up';

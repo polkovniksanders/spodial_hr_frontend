@@ -93,9 +93,7 @@ export async function updateMethodology(
   redirect(ROUTES.DASHBOARD.METHODOLOGY);
 }
 
-export async function getMethodologies(
-  organization_id: RequestID,
-): Promise<MethodologyProps[]> {
+export async function getMethodologies(organization_id: RequestID) {
   const authHeaders = await getAuthHeaders();
 
   const res = await fetch(
@@ -121,7 +119,7 @@ export async function getMethodologies(
     throw new Error(json.error ?? 'Invalid API response');
   }
 
-  return json.data;
+  return { data: json.data };
 }
 
 export async function getMethodology(id: string): Promise<MethodologyProps> {

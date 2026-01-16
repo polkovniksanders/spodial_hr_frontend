@@ -7,10 +7,6 @@ export default function MethodologyList({
 }: {
   data: MethodologyProps[];
 }) {
-  if (!data) return null;
-
-  console.log('data', data);
-
   return (
     <>
       {data.map(methodology => (

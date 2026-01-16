@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 
-import { attachCalendar } from '@/app/actions/attachCalendar';
+import { attachCalendar } from '@/app/actions/calendar';
 import { H1 } from '@/shared/ui/typography/H1';
 
 import OnboardingImage from '../server/onboarding-image';
