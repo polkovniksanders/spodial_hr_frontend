@@ -3,7 +3,20 @@ import React from 'react';
 import ParticipantMatching from '@/features/participants/ui/participant-matching';
 import ParticipantsTitle from '@/features/participants/ui/participants-title';
 
-export default function ParticipantMatcher({ eventId, guests, attendees }) {
+import type {
+  AttendeeProps,
+  GuestProps,
+} from '@/features/participants/model/types';
+
+export default function ParticipantMatcher({
+  eventId,
+  guests,
+  attendees,
+}: {
+  eventId: number;
+  guests: GuestProps[];
+  attendees: AttendeeProps[];
+}) {
   return (
     <div>
       <ParticipantsTitle>Match guests</ParticipantsTitle>
