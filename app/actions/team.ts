@@ -19,8 +19,29 @@ import type { ApiResponse } from '@/shared/types/common';
 // ------------------------------
 // Teams API
 // ------------------------------
-export const getTeams = async (organizationId: number | string) =>
-  httpClient<TeamProps[]>(`${API_URL}/organizations/${organizationId}/teams`);
+export const getTeams = async (organizationId: number | string) => {
+  const authHeaders = await getAuthHeaders();
+
+  const res = await fetch(`${API_URL}/organizations/${organizationId}/teams`, {
+    headers: {
+      ...authHeaders,
+    },
+    cache: 'no-store',
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`${text}`);
+  }
+
+  const json: ApiResponse<TeamProps[]> = await res.json();
+
+  if (!json.success || !json.data) {
+    throw new Error(json.error ?? 'Invalid API response');
+  }
+
+  return { data: json.data };
+};
 
 export const getTeam = async (teamId: string) =>
   httpClient<TeamProps>(`${API_URL}/teams/${teamId}`);
