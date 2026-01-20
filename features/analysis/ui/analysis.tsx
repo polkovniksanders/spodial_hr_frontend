@@ -5,8 +5,6 @@ import Linear from '@/features/analysis/widgets/linear';
 import Summary from '@/features/analysis/widgets/summary';
 import Total from '@/features/analysis/widgets/total';
 
-import responseJSON from './response.json';
-
 import type { AnalysisProps } from '@/features/analysis/model/types';
 import type {
   FollowUpResponse,
