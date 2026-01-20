@@ -4,8 +4,6 @@ interface Props {
 }
 
 export function ConclusionItem({ title, items }: Props) {
-  console.log('items', items);
-
   return (
     <div className='p-6'>
       <p className='text-[16px] mb-4 font-bold'>{title}</p>

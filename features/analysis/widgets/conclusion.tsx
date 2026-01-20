@@ -1,11 +1,11 @@
 import { ConclusionItem } from '@/features/analysis/ui/conclusion-item';
 import { H4 } from '@/shared/ui/typography/H4';
 
-import type { AnalysisJSON } from '@/features/analysis/model/types';
+import type { AnalysisProps } from '@/features/analysis/model/types';
 
 export default function Conclusion({
   conclusion,
-}: Pick<AnalysisJSON, 'conclusion'>) {
+}: Pick<AnalysisProps, 'conclusion'>) {
   return (
     <div className='py-6'>
       <H4>{conclusion.display_name}</H4>

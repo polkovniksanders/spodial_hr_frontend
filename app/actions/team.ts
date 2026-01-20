@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import { API_URL } from '@/app/constants/config';
+import { getAuthHeaders } from '@/shared/lib/getAuthToken';
 import { httpClient } from '@/shared/lib/httpClient';
 import { ROUTES } from '@/shared/lib/routes';
 
@@ -13,6 +14,7 @@ import type {
   TeamCreateDTO,
   TeamProps,
 } from '@/features/teams/model/types';
+import type { ApiResponse } from '@/shared/types/common';
 
 // ------------------------------
 // Teams API
@@ -23,11 +25,20 @@ export const getTeams = async (organizationId: number | string) =>
 export const getTeam = async (teamId: string) =>
   httpClient<TeamProps>(`${API_URL}/teams/${teamId}`);
 
-export async function deleteTeam(id: number) {
-  await httpClient<void>(`${API_URL}/teams/${id}`, {
+export async function deleteTeam(teamId: number) {
+  const authHeaders = await getAuthHeaders();
+
+  const res = await fetch(`${API_URL}/teams/${teamId}`, {
     method: 'DELETE',
+    headers: {
+      ...authHeaders,
+    },
+    cache: 'no-store',
   });
 
+  if (!res.ok) {
+    return await res.text();
+  }
   revalidatePath('/teams');
 }
 

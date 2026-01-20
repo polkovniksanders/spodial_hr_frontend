@@ -1,4 +1,4 @@
-export interface AnalysisJSON {
+export interface AnalysisProps {
   total: {
     current_value: number;
     max_value: number;
@@ -11,7 +11,6 @@ export interface AnalysisJSON {
     frontend_component_type: string;
     value: ConclusionItemProps[];
   };
-
   metrics: MetricGroup[];
 }
 
@@ -21,13 +20,18 @@ export interface ConclusionItemProps {
 }
 
 export interface MetricGroup {
+  current_value: number;
   display_name: string;
-  frontend_component_type: 'list-horizontal';
-  value: MetricItem[];
+  frontend_component_type: string;
+  max_value: number;
+  min_value: number;
+  submetrics: MetricItem[];
 }
 
 export interface MetricItem {
+  current_value: number;
   display_name: string;
-  frontend_component_type: 'linear-progress';
-  value: string;
+  frontend_component_type: string;
+  max_value: number;
+  min_value: number;
 }
