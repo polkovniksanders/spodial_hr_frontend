@@ -1,20 +1,21 @@
 export interface AnalysisJSON {
   total: {
+    current_value: number;
+    max_value: number;
+    min_value: number;
     display_name: string;
-    value: number;
-    maxValue: number;
+    frontend_component_type: string;
   };
-
   conclusion: {
     display_name: string;
-    frontend_component_type: 'conclusion';
-    value: ConclusionBlock[];
+    frontend_component_type: string;
+    value: ConclusionItemProps[];
   };
 
   metrics: MetricGroup[];
 }
 
-export interface ConclusionBlock {
+export interface ConclusionItemProps {
   display_name: string;
   value: string[];
 }

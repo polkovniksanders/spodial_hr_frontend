@@ -6,28 +6,28 @@ import { H4 } from '@/shared/ui/typography/H4';
 
 import type { AnalysisJSON } from '@/features/analysis/model/types';
 
-export default function Total({
-  total: { display_name, value, maxValue },
-}: Pick<AnalysisJSON, 'total'>) {
+export default function Total({ total }: Pick<AnalysisJSON, 'total'>) {
   return (
     <div className={'flex flex-row items-center gap-4'}>
-      <ChartDonut value={+value} />
+      <ChartDonut value={+total.current_value} />
 
       <div className={'flex flex-col gap-4'}>
         <H4>
-          {display_name}{' '}
-          {maxValue && (
+          {total.display_name}
+          {total.max_value && (
             <>
-              <span className='font-bold'>{value as ReactNode}</span> out of{' '}
-              <span className='font-bold'>{maxValue}</span>
+              <span className='font-bold'>
+                {total.current_value as ReactNode}
+              </span>
+              out of <span className='font-bold'>{total.max_value}</span>
             </>
           )}
         </H4>
 
-        {maxValue && (
+        {total.max_value && (
           <div>
             <p className={'text-secondary'}>
-              {renderScoreDescription(+value, +maxValue)}
+              {renderScoreDescription(+total.current_value, +total.max_value)}
             </p>
           </div>
         )}
