@@ -2,7 +2,6 @@
 
 import React, { useTransition } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
 import {
   createMethodology,
@@ -14,6 +13,7 @@ import {
 } from '@/features/methodology/lib/options';
 import { BUTTON } from '@/shared/lib/buttons';
 import { VARIANT_MAPPER, type VariantType } from '@/shared/lib/fieldMapper';
+import { BUTTON_VARIANT } from '@/shared/types/button';
 import { Button } from '@/shared/ui/button/Button';
 
 import type {
@@ -44,10 +44,8 @@ export default function MethodologyForm({
       try {
         if (isEdit) {
           await updateMethodology(organization_id, data);
-          toast.success('Methodology updated');
         } else {
           await createMethodology(organization_id, data);
-          toast.success('Methodology created');
           reset();
         }
       } catch (error) {
@@ -59,31 +57,44 @@ export default function MethodologyForm({
   };
 
   return (
-    <form
-      id={FORM_ID}
-      onSubmit={handleSubmit(onSubmit)}
-      className='flex flex-col flex-1 gap-4'
-    >
-      {FORM_FIELDS.map(field => (
-        <Controller
-          key={field.name}
-          name={field.name as keyof MethodologyDTO}
-          control={control}
-          rules={field.rules}
-          render={({ field: hookField, fieldState }) => {
-            const variant: VariantType = field.variant;
-            const Component = VARIANT_MAPPER[variant];
+    <>
+      <form
+        id={FORM_ID}
+        onSubmit={handleSubmit(onSubmit)}
+        className='flex flex-col flex-1 gap-4'
+      >
+        {FORM_FIELDS.map(field => (
+          <Controller
+            key={field.name}
+            name={field.name as keyof MethodologyDTO}
+            control={control}
+            rules={field.rules}
+            render={({ field: hookField, fieldState }) => {
+              const variant: VariantType = field.variant;
+              const Component = VARIANT_MAPPER[variant];
 
-            return (
-              <Component
-                field={hookField}
-                fieldState={fieldState}
-                config={field}
-              />
-            );
-          }}
-        />
-      ))}
-    </form>
+              return (
+                <Component
+                  field={hookField}
+                  fieldState={fieldState}
+                  config={field}
+                />
+              );
+            }}
+          />
+        ))}
+      </form>
+      <div className={'mt-auto w-[170px]'}>
+        <Button
+          form={FORM_ID}
+          loading={isPending}
+          disabled={isPending}
+          type={'submit'}
+          variant={BUTTON_VARIANT.primary}
+        >
+          {BUTTON.SAVE}
+        </Button>
+      </div>
+    </>
   );
 }

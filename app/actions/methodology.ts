@@ -63,8 +63,10 @@ export async function updateMethodology(
     ...data,
   };
 
-  const res = await fetch(`${API_URL}/methodologies/${id}`, {
-    method: 'PATCH',
+  console.log('payload', payload);
+
+  await fetch(`${API_URL}/methodologies/${id}`, {
+    method: 'PUT',
     headers: {
       ...authHeaders,
       'Content-Type': 'application/json',
@@ -72,19 +74,6 @@ export async function updateMethodology(
     body: JSON.stringify(payload),
     cache: 'no-store',
   });
-
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(
-      `updateMethodology failed: ${res.status} ${res.statusText} — ${text}`,
-    );
-  }
-
-  const json: ApiResponse<MethodologyProps> = await res.json();
-
-  if (!json.success || !json.data) {
-    throw new Error(json.error ?? 'Invalid API response');
-  }
 
   revalidatePath('METHODOLOGY');
   redirect(ROUTES.DASHBOARD.METHODOLOGY);
