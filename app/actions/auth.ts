@@ -10,6 +10,7 @@ import { ROUTES } from '@/shared/lib/routes';
 import type { LoginDTO, RegisterDTO } from '@/features/auth/model/types';
 
 export async function login(data: LoginDTO): Promise<void> {
+  console.log('Login API_URL:', API_URL);
   const res = await fetch(`${API_URL}/auth/login`, {
     method: 'POST',
     headers: {

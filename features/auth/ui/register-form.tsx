@@ -15,10 +15,33 @@ import AuthFormFooter from '@/widgets/auth/ui/auth-form-footer';
 
 import type { RegisterDTO } from '@/features/auth/model/types';
 
+type FieldErrors = {
+  fieldErrors: Partial<Record<keyof RegisterDTO, string>>;
+};
+
+const isFieldError = (error: unknown): error is FieldErrors =>
+  typeof error === 'object' &&
+  error !== null &&
+  'fieldErrors' in error &&
+  typeof (error as FieldErrors).fieldErrors === 'object';
+
+const getErrorMessage = (error: unknown): string => {
+  if (error instanceof Error) return error.message;
+  if (typeof error === 'string') return error;
+  return 'Registration failed. Please try again.';
+};
+
+const FORM_ID = 'register-form';
+
 export default function RegisterForm() {
   const [isPending, startTransition] = useTransition();
 
-  const { control, handleSubmit, setError } = useForm<RegisterDTO>({
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<RegisterDTO>({
     defaultValues: REGISTER_FIELDS_VALUES,
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -29,13 +52,8 @@ export default function RegisterForm() {
       try {
         await register(data);
       } catch (error) {
-        const err = error as {
-          fieldErrors?: Partial<Record<keyof RegisterDTO, string>>;
-          message?: string;
-        };
-
-        if (err.fieldErrors) {
-          for (const [field, message] of Object.entries(err.fieldErrors) as [
+        if (isFieldError(error)) {
+          for (const [field, message] of Object.entries(error.fieldErrors) as [
             keyof RegisterDTO,
             string,
           ][]) {
@@ -43,11 +61,11 @@ export default function RegisterForm() {
           }
           return;
         }
+
+        setError('root', { message: getErrorMessage(error) });
       }
     });
   };
-
-  const FORM_ID = 'register-form';
 
   return (
     <>
@@ -55,7 +73,18 @@ export default function RegisterForm() {
         id={FORM_ID}
         onSubmit={handleSubmit(onSubmit)}
         className='w-full flex flex-col gap-[30px]'
+        aria-describedby={errors.root ? 'form-error' : undefined}
       >
+        {errors.root?.message && (
+          <p
+            id='form-error'
+            role='alert'
+            aria-live='polite'
+            className='text-sm text-red-700 text-center'
+          >
+            {errors.root.message}
+          </p>
+        )}
         {REGISTER_FIELDS.map(field => (
           <Controller
             key={field.name}

@@ -12,10 +12,33 @@ import AuthFormFooter from '@/widgets/auth/ui/auth-form-footer';
 
 import type { LoginDTO } from '@/features/auth/model/types';
 
+type FieldErrors = {
+  fieldErrors: Partial<Record<keyof LoginDTO, string>>;
+};
+
+const isFieldError = (error: unknown): error is FieldErrors =>
+  typeof error === 'object' &&
+  error !== null &&
+  'fieldErrors' in error &&
+  typeof (error as FieldErrors).fieldErrors === 'object';
+
+const getErrorMessage = (error: unknown): string => {
+  if (error instanceof Error) return error.message;
+  if (typeof error === 'string') return error;
+  return 'Login failed. Please try again.';
+};
+
+const FORM_ID = 'login-form';
+
 export default function LoginForm() {
   const [isPending, startTransition] = useTransition();
 
-  const { control, handleSubmit, setError } = useForm<LoginDTO>({
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<LoginDTO>({
     defaultValues: SIGN_IN_VALUES,
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -26,13 +49,8 @@ export default function LoginForm() {
       try {
         await login(data);
       } catch (error) {
-        const err = error as {
-          fieldErrors?: Partial<Record<keyof LoginDTO, string>>;
-          message?: string;
-        };
-
-        if (err.fieldErrors) {
-          for (const [field, message] of Object.entries(err.fieldErrors) as [
+        if (isFieldError(error)) {
+          for (const [field, message] of Object.entries(error.fieldErrors) as [
             keyof LoginDTO,
             string,
           ][]) {
@@ -40,11 +58,11 @@ export default function LoginForm() {
           }
           return;
         }
+
+        setError('root', { message: getErrorMessage(error) });
       }
     });
   };
-
-  const FORM_ID = 'login-form';
 
   return (
     <>
@@ -52,7 +70,18 @@ export default function LoginForm() {
         id={FORM_ID}
         onSubmit={handleSubmit(onSubmit)}
         className='w-full flex flex-col gap-[30px]'
+        aria-describedby={errors.root ? 'form-error' : undefined}
       >
+        {errors.root?.message && (
+          <p
+            id='form-error'
+            role='alert'
+            aria-live='polite'
+            className='text-sm text-red-700 text-center'
+          >
+            {errors.root.message}
+          </p>
+        )}
         {SIGN_IN_FIELDS.map(field => (
           <Controller
             key={field.name}
@@ -74,7 +103,6 @@ export default function LoginForm() {
           />
         ))}
       </form>
-
       <AuthFormFooter
         loading={isPending}
         formId={FORM_ID}
